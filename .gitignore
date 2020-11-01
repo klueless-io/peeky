@@ -11,7 +11,7 @@
 # Ignore Klue Setup.sh
 /bin/runonce/
 peeky.yml
-
+/_
 /.bundle/
 /.history/
 /.yardoc
