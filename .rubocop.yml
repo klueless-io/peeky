@@ -26,7 +26,7 @@ Metrics/BlockLength:
     - transaction
 
 Metrics/MethodLength:
-  Max: 25
+
 
 Layout/LineLength:
   Max: 200

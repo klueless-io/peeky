@@ -1,3 +1,21 @@
+# ToDo
+
+* Manually create each file using the template system
+  - ParameterInfo
+  - AttrInfo
+  - ClassInfo
+  - MethodInfo
+* Recreate peeky
+* [DONE] Symlink my klueless files
+* Hot fix after each section
+* Make sure the klueless files follow a natural structure
+* Build out the readme file
+* Build out the stories
+* Push peeky to Ruby Gems
+* Back compare templates vis definitions
+* Auto create .template folder with copied definitions
+
+
 # Peeky
 
 > Peeky is a Ruby GEM for peaking into ruby classes and extracting meta
