@@ -1,4 +1,6 @@
-require "peeky/version"
+# frozen_string_literal: true
+
+require 'peeky/version'
 
 module Peeky
   class Error < StandardError; end
