@@ -1,6 +1,9 @@
 AllCops:
   DisplayCopNames: true
   ExtraDetails: true
+  NewCops: enable
+  Exclude:
+    - "_/**/*"
 
 Metrics/BlockLength:
   Exclude:
@@ -26,7 +29,7 @@ Metrics/BlockLength:
     - transaction
 
 Metrics/MethodLength:
-
+  Max: 25
 
 Layout/LineLength:
   Max: 200
@@ -43,3 +46,4 @@ Style/BlockComments:
     - "**/spec/*"
     
 inherit_from: .rubocop_todo.yml
+
