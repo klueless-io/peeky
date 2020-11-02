@@ -2,6 +2,7 @@
 
 require 'peeky/version'
 
+require 'peeky/method_info'
 require 'peeky/parameter_info'
 
 module Peeky
