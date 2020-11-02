@@ -3,38 +3,31 @@
 require 'spec_helper'
 
 # rubocop:disable Style/TrivialAccessors
-class SampleClassAttrReaderPredicate
+class SampleClassAttrWriterPredicate
   # Match
   attr_accessor :read_write
-  # Match
+  # No Match
   attr_reader :read
-  # No match
+  # Match
   attr_writer :write
 
   def edge_case?; end
 
   def edge_case!; end
 
-  def edge_case=; end
-
-  # Match (unfortunately)
-  def memoized_reader
-    @memoized_reader ||= 'behaves just like attr_reader, but is not really an attr_reader'
-  end
-
-  # No match
-  def just_a_method
-    'just some method'
-  end
-
   # No match
   def standard_method(abc)
     @standard_method = abc
   end
+
+  # Match
+  def writer_look_alike=(abc)
+    @writer_look_alike = abc
+  end
 end
 # rubocop:enable Style/TrivialAccessors
 
-RSpec.describe Peeky::Predicates::AttrReaderPredicate do
+RSpec.describe Peeky::Predicates::AttrWriterPredicate do
   subject { instance }
 
   let(:instance) { described_class.new }
@@ -49,31 +42,26 @@ RSpec.describe Peeky::Predicates::AttrReaderPredicate do
     let(:instance) { described_class.new.match(target_instance, method_signature) }
     let(:method_signature) { Peeky::MethodInfo.new(method) }
     let(:method) { target_instance.method(method_name) }
-    let(:target_instance) { SampleClassAttrReaderPredicate.new }
+    let(:target_instance) { SampleClassAttrWriterPredicate.new }
     let(:method_name) { :memoized_reader }
 
     context 'when attr_accessor (read_write)' do
-      let(:method_name) { :read_write }
+      let(:method_name) { :read_write= }
       it { is_expected.to be_truthy }
     end
 
     context 'when attr_reader (read)' do
       let(:method_name) { :read }
-      it { is_expected.to be_truthy }
+      it { is_expected.to be_falsy }
     end
 
     context 'when attr_writer (write)' do
       let(:method_name) { :write= }
-      it { is_expected.to be_falsy }
-    end
-
-    context 'when memoized_reader (method that looks like attr_reader, but is not)' do
-      let(:method_name) { :memoized_reader }
       it { is_expected.to be_truthy }
     end
 
-    context 'when just_a_method (method with same characteristics as a attr_reader)' do
-      let(:method_name) { :just_a_method }
+    context 'when writer_look_alike (method with same characteristics as a attr_reader)' do
+      let(:method_name) { :writer_look_alike= }
       it { is_expected.to be_falsy }
     end
 
@@ -89,11 +77,6 @@ RSpec.describe Peeky::Predicates::AttrReaderPredicate do
 
     context 'when ending with ?' do
       let(:method_name) { :edge_case? }
-      it { is_expected.to be_falsy }
-    end
-
-    context 'when ending with =' do
-      let(:method_name) { :edge_case= }
       it { is_expected.to be_falsy }
     end
   end

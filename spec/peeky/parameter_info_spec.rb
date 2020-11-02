@@ -21,9 +21,9 @@ RSpec.describe Peeky::ParameterInfo do
     end
   end
 
-  it 'debug' do
-    described_class.from_parameter([:req, 'aaa']).debug
-  end
+  # it 'debug' do
+  #   described_class.from_parameter([:req, 'aaa']).debug
+  # end
 
   describe '#from_parameter' do
     let(:instance) { described_class.from_parameter(param) }
