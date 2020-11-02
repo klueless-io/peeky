@@ -66,4 +66,39 @@ RSpec.describe Peeky::MethodInfo do
       end
     end
   end
+
+  describe '.parameters' do
+    subject { instance.parameters }
+
+    context 'with simple method' do
+      it { is_expected.to have_attributes(length: 1) }
+
+      it do
+        is_expected.to include(
+          have_attributes(name: 'first_param',
+                          type: :param_required,
+                          signature_format: 'first_param',
+                          minimal_call_format: "'first_param'")
+        )
+      end
+    end
+
+    context 'with complex method' do
+      let(:method_name) { :complex }
+
+      it { is_expected.to have_attributes(length: 7) }
+
+      it do
+        is_expected.to include(
+          have_attributes(name: 'aaa', type: :param_required, signature_format: 'aaa'       , minimal_call_format: "'aaa'"),
+          have_attributes(name: 'bbb', type: :param_optional, signature_format: 'bbb = nil' , minimal_call_format: ''),
+          have_attributes(name: 'ccc', type: :splat         , signature_format: '*ccc'      , minimal_call_format: ''),
+          have_attributes(name: 'ddd', type: :key_required  , signature_format: 'ddd:'      , minimal_call_format: "ddd: 'ddd'"),
+          have_attributes(name: 'eee', type: :key_optional  , signature_format: 'eee: nil'  , minimal_call_format: ''),
+          have_attributes(name: 'fff', type: :double_splat  , signature_format: '**fff'     , minimal_call_format: ''),
+          have_attributes(name: 'ggg', type: :block         , signature_format: '&ggg'      , minimal_call_format: '')
+        )
+      end
+    end
+  end
 end
