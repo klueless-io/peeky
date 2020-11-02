@@ -15,8 +15,13 @@ module Peeky
 
     def_delegators :method, :name, :receiver, :arity, :super_method
 
-    # , target_instance = nil)
-    def initialize(method)
+    # Stage 2 is the method likely to be an attribute reader or writer
+
+    # Implemented As indicates the probable representation of this
+    # method in ruby, was it `def method` or `attr_reader` / `attr_writer`
+    attr_reader :implementation_type
+
+    def initialize(method, target_instance = nil)
       @method = method
       @parameters = ParameterInfo.from_method(method)
       # stage 1
