@@ -2,13 +2,18 @@
 
 * Manually create each file using the template system
   - [Done] ParameterInfo
-  - AttrInfo
-  - ClassInfo
-  - MethodInfo
-* Recreate peeky
+  - [Done] AttrInfo
+  - [Done] ClassInfo
+  - [Done] MethodInfo
+* Create renderers
+  - method_call_minimum_params_renderer - MinimalCallSignatureRender
+  - MethodSignatureRender -
+  - MethodSignatureWithDebug - StubbedMethodRender
+  - ClassInterfaceRender
+* [Done] Recreate peeky
 * [DONE] Symlink my klueless files
-* Hot fix after each section
-* Make sure the klueless files follow a natural structure
+* [Done] Hot fix after each section
+* [Done] Make sure the klueless files follow a natural structure
 * Build out the readme file
 * Build out the stories
 * Push peeky to Ruby Gems
