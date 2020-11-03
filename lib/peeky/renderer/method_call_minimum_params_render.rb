@@ -2,7 +2,7 @@
 
 module Peeky
   module Renderer
-    # Render a method Call with minimum parameters
+    # Render: Simple instance method calls with minimum parameters
     #
     # Example output:
     #   instance.simple('first_param')
