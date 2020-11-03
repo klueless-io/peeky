@@ -10,7 +10,7 @@ class SampleClassMinimalCallSignatureRender
 end
 # rubocop:enable Metrics/ParameterLists
 
-RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRenderer do
+RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do
   subject { instance }
 
   let(:instance) { described_class.new(method_signature) }
