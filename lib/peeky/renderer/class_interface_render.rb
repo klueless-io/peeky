@@ -2,7 +2,7 @@
 
 module Peeky
   module Renderer
-    # Class Interface Render
+    # Render: Class Interface
     #
     # Example output:
     # class SampleClassClassInterfaceRender

@@ -3,7 +3,8 @@
 require 'forwardable'
 
 module Peeky
-  # Method Info
+  # Method info store a list of instance methods and attr_* for
+  # a ruby class.
   class MethodInfo
     extend Forwardable
 
