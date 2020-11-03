@@ -62,7 +62,7 @@ RSpec.describe Peeky::MethodInfo do
       context 'when parent class has super method' do
         let(:method_name) { :to_s }
 
-        it { is_expected.to eq '#<Method: Kernel#to_s()>' }
+        it { is_expected.to start_with '#<Method: Kernel#to_s' }
       end
     end
   end

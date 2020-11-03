@@ -12,10 +12,10 @@ Gem::Specification.new do |spec|
   spec.summary                = 'Extracting meta data from ruby classes'
   spec.description            = <<-TEXT
   Peeky is a Ruby GEM for peaking into ruby classes and extracting meta data.
-  You can use this meta data to recreate classes, interfaces, documentation etc. 
+  You can use this meta data to recreate classes, interfaces, documentation etc.
   or use it just to understand the internals of a class.
   TEXT
-  
+
   spec.homepage               = 'http://appydave.com/gems/peeky'
   spec.license                = 'MIT'
 
