@@ -6,8 +6,8 @@ AllCops:
     - "_/**/*"
 
 # My Preferences - Start
-# Style/AccessorGrouping:
-#   Enabled: false
+Style/AccessorGrouping:
+  Enabled: false
 
 Layout/SpaceBeforeComma:
   Enabled: false

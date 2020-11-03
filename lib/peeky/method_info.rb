@@ -27,12 +27,50 @@ module Peeky
       # stage 1
       # @implementation_type = :method
 
-      # # stage 2
-      # if target_instance.nil?
-      #   @implementation_type = :method
-      # else
-      #   infer_implementation_type(target_instance)
-      # end
+      # stage 2
+      @implementation_type = infer_implementation_type(target_instance)
+    end
+
+    # Stage 2 (working out) attr_accessor
+    # Name of method minus writer annotations
+    # Example :writable_attribute= becomes :writable_attribute
+    def clean_name
+      @clean_name ||= begin
+        n = name.to_s
+        n.end_with?('=') ? n.delete_suffix('=').to_sym : name
+      end
+    end
+
+    def infer_implementation_type(target_instance)
+      if target_instance.nil?
+        :method
+      elsif match(target_instance, Peeky::Predicates::AttrReaderPredicate)
+        :attr_reader
+      elsif match(target_instance, Peeky::Predicates::AttrWriterPredicate)
+        :attr_writer
+      else
+        :method
+      end
+    end
+
+    def match(target_instance, predicate)
+      predicate.new.match(target_instance, self)
+    end
+
+    def method?
+      @implementation_type == :method
+    end
+
+    # https://github.com/rubyide/vscode-ruby/issues/454
+    # if I prefix these methods with attr_ then will get an issue
+    # in the language server.
+    # Cannot read property 'namedChildren' of undefined
+    def readable?
+      @implementation_type == :attr_reader
+    end
+
+    def writable?
+      @implementation_type == :attr_writer
     end
 
     def debug

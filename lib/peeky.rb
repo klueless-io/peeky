@@ -2,6 +2,8 @@
 
 require 'peeky/version'
 
+require 'peeky/attr_info'
+require 'peeky/class_info'
 require 'peeky/method_info'
 require 'peeky/parameter_info'
 
