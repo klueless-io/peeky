@@ -2,7 +2,7 @@
 
 module Peeky
   module Renderer
-    # Method Signature Render
+    # Render: Method Signature in compact format
     #
     # Example output:
     #   def simple(first_param);                                           end
