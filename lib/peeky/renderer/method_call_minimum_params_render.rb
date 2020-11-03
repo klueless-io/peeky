@@ -7,7 +7,7 @@ module Peeky
     # Example output:
     #   instance.simple('first_param')
     #   instance.complex('aaa', ddd: 'ddd')
-    class MethodCallMinimumParamsRenderer
+    class MethodCallMinimumParamsRender
       attr_reader :method_signature
 
       def initialize(method_signature, instance_name = 'instance')
