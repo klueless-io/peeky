@@ -1,24 +1,28 @@
 # ToDo
 
 * Manually create each file using the template system
-  - [Done] ParameterInfo
-  - [Done] AttrInfo
-  - [Done] ClassInfo
-  - [Done] MethodInfo
-* Create renderers
-  - method_call_minimum_params_renderer - MinimalCallSignatureRender
-  - MethodSignatureRender -
-  - MethodSignatureWithDebug - StubbedMethodRender
-  - ClassInterfaceRender
-* [Done] Recreate peeky
-* [DONE] Symlink my klueless files
-* [Done] Hot fix after each section
-* [Done] Make sure the klueless files follow a natural structure
-* Build out the readme file
-* Build out the stories
-* Push peeky to Ruby Gems
-* Back compare templates vis definitions
-* Auto create .template folder with copied definitions
+  - Models
+    - [Done] ParameterInfo
+    - [Done] AttrInfo
+    - [Done] ClassInfo
+    - [Done] MethodInfo
+  - Create predicates
+    - [Done] attr_reader_predicate
+    - [Done] attr_writer_predicate
+  - Create renderers
+    - [Done] method_call_minimum_params_render
+    - [Done] method_signature_render
+    - [Done] method_signature_with_debug_render
+    - [Done] class_interface_render
+- [Done] Recreate peeky
+- [Done] Symlink KlueLess files
+- [Done] Hot fix after each section
+- [Done] Make sure the klueless files follow a natural structure
+- [Done] Push peeky to Ruby Gems
+- Build out the readme file
+- Build out the stories
+- Back compare templates vis definitions
+- Auto create .template folder with copied definitions
 
 
 # Peeky
