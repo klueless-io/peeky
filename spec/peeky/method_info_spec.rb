@@ -100,5 +100,23 @@ RSpec.describe Peeky::MethodInfo do
         )
       end
     end
+
+    # Stage 2
+    describe '#infer_implementation_type' do
+      subject { instance.infer_implementation_type(target_instance) }
+
+      context 'when simple method' do
+        let(:method_name) { :simple }
+        it { is_expected.to eq :method }
+      end
+      context 'when reader method' do
+        let(:method_name) { :read_write }
+        it { is_expected.to eq :attr_reader }
+      end
+      context 'when writer method' do
+        let(:method_name) { :read_write= }
+        it { is_expected.to eq :attr_writer }
+      end
+    end
   end
 end
