@@ -4,7 +4,26 @@
 
 As a Ruby Developer, I should be able to Reverse engineer classes and methods, so that I can document and understand them
 
-## Stories
+## Development rader
+
+
+### Tasks next on list
+
+As a Developer, I can use Peeky with a simple API, so that I use this GEM quickly
+
+- Add simplified API with examples
+- Start documenting usage instructions
+
+As a Developer, I can quickly build requirements, so that I can document project features
+
+- Add support for backlog stories and tasks
+- Add usage instructions
+
+
+
+## Stories and tasks
+
+### Stories - completed
 
 As a Developer, I can render a class with instance attributes and methods, So that I can quickly mock out an entire class
 
@@ -35,14 +54,12 @@ As a Developer, I should be able to interrogate class instance information, so t
 - ClassInfo stores information about a ruby class. Only support instance methods
 
 
-## Tasks
-
+##$ Tasks - completed
 
 Setup GitHub Action (test and lint)
 
 - Setup Rspec action
 - Setup RuboCop action
-
 
 Setup new Ruby GEM
 

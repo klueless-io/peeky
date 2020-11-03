@@ -2,11 +2,7 @@
 
 > Peeky is a Ruby GEM for peaking into ruby classes and extracting meta
 
-Welcome to your new ruby gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/peeky`.
-
 When using the source code for this gem, start by running `bin/setup` to install locally or `bundle install`
-
-To experiment with that code, run `bin/console` for an interactive prompt or run `exe/peeky` to see a list of commands.
 
 ## Installation
 
