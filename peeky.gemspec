@@ -6,11 +6,16 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version  = '>= 2.5'
   spec.name                   = 'peeky'
   spec.version                = Peeky::VERSION
-  spec.authors                = ['David']
+  spec.authors                = ['David C']
   spec.email                  = ['david@ideasmen.com.au']
 
-  spec.summary                = 'Peeky is a Ruby GEM for peaking into ruby classes and extracting meta'
-  spec.description            = 'Peeky is a Ruby GEM for peaking into ruby classes and extracting meta'
+  spec.summary                = 'Extracting meta data from ruby classes'
+  spec.description            = <<-TEXT
+  Peeky is a Ruby GEM for peaking into ruby classes and extracting meta data.
+  You can use this meta data to recreate classes, interfaces, documentation etc. 
+  or use it just to understand the internals of a class.
+  TEXT
+  
   spec.homepage               = 'http://appydave.com/gems/peeky'
   spec.license                = 'MIT'
 
@@ -34,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.extensions    = ['ext/peeky/extconf.rb']
+  # spec.extensions    = ['ext/peeky/extconf.rb']
 
   # spec.add_dependency 'tty-box',         '~> 0.5.0'
 end
