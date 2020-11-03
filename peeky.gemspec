@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version  = '>= 2.5'
   spec.name                   = 'peeky'
   spec.version                = Peeky::VERSION
-  spec.authors                = ['David C']
+  spec.authors                = ['David Cruwys']
   spec.email                  = ['david@ideasmen.com.au']
 
   spec.summary                = 'Extracting meta data from ruby classes'
