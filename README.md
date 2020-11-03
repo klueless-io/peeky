@@ -1,30 +1,3 @@
-# ToDo
-
-* Manually create each file using the template system
-  - Models
-    - [Done] ParameterInfo
-    - [Done] AttrInfo
-    - [Done] ClassInfo
-    - [Done] MethodInfo
-  - Create predicates
-    - [Done] attr_reader_predicate
-    - [Done] attr_writer_predicate
-  - Create renderers
-    - [Done] method_call_minimum_params_render
-    - [Done] method_signature_render
-    - [Done] method_signature_with_debug_render
-    - [Done] class_interface_render
-- [Done] Recreate peeky
-- [Done] Symlink KlueLess files
-- [Done] Hot fix after each section
-- [Done] Make sure the klueless files follow a natural structure
-- [Done] Push peeky to Ruby Gems
-- Build out the readme file
-- Build out the stories
-- Back compare templates vis definitions
-- Auto create .template folder with copied definitions
-
-
 # Peeky
 
 > Peeky is a Ruby GEM for peaking into ruby classes and extracting meta
@@ -57,6 +30,17 @@ gem install peeky
 
 ## Stories
 
+### Main Story
+
+As a Ruby Developer, I should be able to Reverse engineer classes and methods, so that I can document and understand them
+
+See all [stories](./README-stories.md)
+
+### Featured Stories
+
+- As a Developer, I should be able to interrogate class instance information, so that I can reverse engineer a ruby class
+- As a Developer, I can render method with minimal parameter calls, So that I know the minimum parameters when calling a method
+- As a Developer, I can render a class with instance attributes and methods, So that I can quickly mock out an entire class
 
 ## Usage
 
