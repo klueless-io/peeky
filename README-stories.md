@@ -9,6 +9,11 @@ As a Ruby Developer, I should be able to Reverse engineer classes and methods, s
 
 ### Tasks next on list
 
+As a Developer, I can render a class with RDoc documentation, so that I do not have to manually type RDoc references
+
+- Add simplified API with examples
+- Start documenting usage instructions
+
 As a Developer, I can use Peeky with a simple API, so that I use this GEM quickly
 
 - Add simplified API with examples
@@ -24,6 +29,12 @@ As a Developer, I can quickly build requirements, so that I can document project
 ## Stories and tasks
 
 ### Stories - completed
+
+As a David, I can edify Karin, because she is cool
+
+- karin_is_awesome
+- i_am_very_grateful_for_karin
+- karin_the_beautiful
 
 As a Developer, I can render a class with instance attributes and methods, So that I can quickly mock out an entire class
 
