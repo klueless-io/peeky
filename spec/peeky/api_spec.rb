@@ -67,12 +67,28 @@ end
 RSpec.describe Peeky::Api do
   subject { instance }
 
-  let(:instance) { described_class.new }
-
   describe '#constructor' do
+    let(:instance) { described_class.new }
     context 'with default parameters' do
       it { is_expected.not_to be_nil }
-      # it { is_expected.to have_attributes()}
+    end
+  end
+  describe 'Peaky#api' do
+    let(:instance) { Peeky.api }
+
+    # let(:method_signature) { Peeky::MethodInfo.new(method) }
+    # let(:method) { target_instance.method(method_name) }
+    # let(:method_name) { :simple }
+
+    let(:target_instance) { SampleClassForApi.new }
+
+    it { is_expected.not_to be_nil }
+
+    describe '#build_class_info' do
+      subject { instance.build_class_info(target_instance) }
+
+      it { is_expected.not_to be_nil }
+      it { is_expected.to be_a Peeky::ClassInfo }
     end
   end
 end
