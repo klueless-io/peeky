@@ -1,0 +1,127 @@
+# frozen_string_literal: true
+
+# require 'active_support/core_ext'
+require 'active_support/core_ext/string'
+
+module Peeky
+  module Renderer
+    # Render: Class Interface with YARD documentation
+    class ClassInterfaceYardRender
+      attr_accessor :indent
+      attr_accessor :default_param_type
+      attr_accessor :default_splat_param_type
+
+      attr_reader :class_info
+
+      def initialize(class_info)
+        @class_info = class_info
+        @indent = ''
+        @default_param_type = 'String'
+        @default_splat_param_type = 'Object'
+      end
+
+      def render
+        output = []
+        output.push render_start
+        @indent += '  '
+        output += render_accessors
+        output += render_readers
+        output += render_writers
+        output += render_methods
+        output.pop if output.last == ''
+
+        @indent = @indent[0..-3]
+
+        output.push render_end
+
+        output.join("\n")
+      end
+
+      def render_start
+        [
+          "#{@indent}# #{class_info.class_name.titleize.humanize}",
+          "#{@indent}class #{class_info.class_name}"
+        ]
+      end
+
+      def render_accessors
+        result = []
+        class_info.accessors.map.with_index do |attr, index|
+          result.push '' if index.positive?
+          result.push "#{@indent}# #{attr.name.to_s.humanize}"
+          result.push "#{@indent}attr_accessor :#{attr.name}"
+        end
+        result.push '' unless result.length.zero?
+        result
+      end
+
+      def render_readers
+        result = []
+        class_info.readers.map.with_index do |attr, index|
+          result.push '' if index.positive?
+          result.push "#{@indent}# #{attr.name.to_s.humanize}"
+          result.push "#{@indent}attr_reader :#{attr.name}"
+        end
+        result.push '' unless result.length.zero?
+        result
+      end
+
+      def render_writers
+        result = []
+        class_info.writers.map.with_index do |attr, index|
+          result.push '' if index.positive?
+          result.push "#{@indent}# #{attr.name.to_s.humanize}"
+          result.push "#{@indent}attr_writer :#{attr.name}"
+        end
+        result.push '' unless result.length.zero?
+        result
+      end
+
+      # rubocop:disable Metrics/AbcSize, Metrics/BlockLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      def render_methods
+        result = []
+        class_info.methods.map.with_index do |method_signature, index|
+          result.push '' if index.positive?
+          result.push "#{@indent}# #{method_signature.name.to_s.humanize}"
+
+          method_signature.parameters.each_with_index do |parameter, param_index|
+            result.push "#{@indent}#" if param_index.zero?
+
+            case parameter.type
+            when :splat
+              result.push "#{@indent}# @param #{parameter.name} [Array<#{default_splat_param_type}>] *#{parameter.name} - list of #{parameter.name.to_s.humanize.downcase}"
+            when :double_splat
+              result.push "#{@indent}# @param #{parameter.name} [<key: value>...] **#{parameter.name} - list of key/values"
+            when :block
+              result.push "#{@indent}# @param #{parameter.name} [Block] &#{parameter.name}"
+            when :key_required
+              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (required)"
+            when :key_optional
+              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (optional)"
+            when :param_required
+              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (required)"
+            when :param_optional
+              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (optional)"
+            else
+              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase}"
+            end
+          end
+
+          result.push "#{@indent}# @return [Boolean] true when #{method_signature.name.to_s.humanize.downcase}" if method_signature.name.to_s.end_with?('?')
+
+          render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
+          render_signature.indent = @indent
+          render_signature.style = :default
+          result.push render_signature.render
+        end
+        result.push '' unless result.length.zero?
+        result
+      end
+      # rubocop:enable Metrics/AbcSize, Metrics/BlockLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+
+      def render_end
+        "#{@indent}end"
+      end
+    end
+  end
+end
