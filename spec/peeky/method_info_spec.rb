@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/ParameterLists
 class SampleClassMethodInfo
   attr_accessor :read_write
 
@@ -12,7 +11,6 @@ class SampleClassMethodInfo
 
   def to_s; end
 end
-# rubocop:enable Metrics/ParameterLists
 
 RSpec.describe Peeky::MethodInfo do
   subject { instance }

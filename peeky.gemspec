@@ -41,5 +41,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   # spec.extensions    = ['ext/peeky/extconf.rb']
 
+  spec.add_dependency 'activesupport'
   # spec.add_dependency 'tty-box',         '~> 0.5.0'
 end

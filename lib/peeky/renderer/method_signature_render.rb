@@ -8,10 +8,15 @@ module Peeky
     #   def simple(first_param);                                           end
     #   def complex(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);    end
     class MethodSignatureRender
+      attr_accessor :indent
+      attr_accessor :style
+
       attr_reader :method_signature
 
       def initialize(method_signature)
         @method_signature = method_signature
+        @indent = ''
+        @style = :compact
       end
 
       def render_signature
@@ -19,16 +24,24 @@ module Peeky
 
         formatted_parameters = method_signature.parameters.map(&:signature_format).join(', ')
         params = formatted_parameters.length.zero? ? '' : "(#{formatted_parameters})"
-        "def #{name}#{params}"
+        "#{@indent}def #{name}#{params}"
       end
 
       def render_end
-        'end'
+        "#{@indent}end"
       end
 
       def render
-        signature = "#{render_signature};"
-        "#{signature.ljust(80)}#{render_end}"
+        output = []
+        if @style == :compact
+          signature = "#{render_signature};"
+          output.push "#{signature.ljust(80)}#{render_end}"
+        end
+        if @style == :default
+          output.push render_signature
+          output.push render_end
+        end
+        output.join("\n")
       end
 
       def debug

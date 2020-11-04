@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/ParameterLists, Layout/EmptyLineBetweenDefs
 class SampleClassClassInterfaceRender
   # Check that attr_* is handled
   attr_accessor :a
@@ -32,7 +31,6 @@ class SampleClassClassInterfaceRender
   def alpha_sort2;                                        end
   def alpha_sort1;                                        end
 end
-# rubocop:enable Metrics/ParameterLists, Layout/EmptyLineBetweenDefs
 
 RSpec.describe Peeky::Renderer::ClassInterfaceRender do
   subject { instance }

@@ -4,8 +4,19 @@ AllCops:
   NewCops: enable
   Exclude:
     - "_/**/*"
+    - "lib/peeky/example/yard_sample.rb"
 
 # My Preferences - Start
+Style/EmptyMethod:    
+  Exclude:
+    - "**/spec/**/*"
+Metrics/ParameterLists:
+  Exclude:
+    - "**/spec/**/*"
+Layout/EmptyLineBetweenDefs:
+  Exclude:
+    - "**/spec/**/*"
+
 Style/AccessorGrouping:
   Enabled: false
 
@@ -16,6 +27,7 @@ Layout/SpaceBeforeComma:
 Metrics/BlockLength:
   Exclude:
     - "**/spec/*"
+    - "*.gemspec"
   ExcludedMethods:
     - configure
     - context
