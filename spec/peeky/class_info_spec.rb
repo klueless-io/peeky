@@ -34,6 +34,48 @@ RSpec.describe Peeky::ClassInfo do
     it { is_expected.to have_attributes(length: 3) }
   end
 
+  describe '#method_by_name' do
+    subject { instance.method_by_name(name) }
+
+    let(:name) { :simple }
+
+    it { is_expected.not_to be_nil }
+
+    context 'when not a standard method' do
+      let(:name) { :a }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#reader_by_name' do
+    subject { instance.reader_by_name(name) }
+
+    let(:name) { :a }
+
+    it { is_expected.not_to be_nil }
+
+    context 'when not a standard reader' do
+      let(:name) { :simple }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#writer_by_name' do
+    subject { instance.writer_by_name(name) }
+
+    let(:name) { :a= }
+
+    it { is_expected.not_to be_nil }
+
+    context 'when not a standard writer' do
+      let(:name) { :simple }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#signatures' do
     subject { instance.signatures }
 
@@ -113,6 +155,39 @@ RSpec.describe Peeky::ClassInfo do
 
       it { is_expected.to have_attributes(length: 1) }
       it { is_expected.to include(have_attributes(name: :a=, implementation_type: :attr_writer)) }
+    end
+
+    context 'when filter_type is' do
+      subject { instance.signatures_by_name(name, filter_type: filter_type) }
+      let(:name) { :simple }
+
+      context ':all' do
+        let(:filter_type) { :all }
+        it { is_expected.to include(have_attributes(name: :simple, implementation_type: :method)) }
+      end
+
+      context ':method' do
+        let(:filter_type) { :method }
+        it { is_expected.to include(have_attributes(name: :simple, implementation_type: :method)) }
+      end
+
+      context ':attr_reader' do
+        let(:filter_type) { :attr_reader }
+        it { is_expected.not_to include(have_attributes(name: :simple, implementation_type: :method)) }
+        context 'when attribute reader method' do
+          let(:name) { :a }
+          it { is_expected.to include(have_attributes(name: :a, implementation_type: :attr_reader)) }
+        end
+      end
+
+      context ':attr_writer' do
+        let(:filter_type) { :attr_writer }
+        it { is_expected.not_to include(have_attributes(name: :simple, implementation_type: :method)) }
+        context 'when attribute writer method' do
+          let(:name) { :a= }
+          it { is_expected.to include(have_attributes(name: :a=, implementation_type: :attr_writer)) }
+        end
+      end
     end
   end
 
