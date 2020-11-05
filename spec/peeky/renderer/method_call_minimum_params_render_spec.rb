@@ -29,7 +29,7 @@ RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do
     it { is_expected.to eq("instance.simple('first_param')") }
 
     context 'with instance name' do
-      let(:instance) { described_class.new(method_signature, 'var1') }
+      let(:instance) { described_class.new(method_signature, instance_name: 'var1') }
 
       it { is_expected.to eq("var1.simple('first_param')") }
 

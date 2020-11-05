@@ -10,7 +10,8 @@ module Peeky
     class MethodCallMinimumParamsRender
       attr_reader :method_signature
 
-      def initialize(method_signature, instance_name = 'instance')
+      def initialize(method_signature, **opts)
+        instance_name = opts[:instance_name] || 'instance'
         @instance_name = instance_name
         @method_signature = method_signature
       end

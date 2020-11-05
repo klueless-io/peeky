@@ -13,7 +13,7 @@ module Peeky
 
       attr_reader :method_signature
 
-      def initialize(method_signature)
+      def initialize(method_signature, **_opts)
         @method_signature = method_signature
         @indent = ''
         @style = :compact
