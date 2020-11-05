@@ -24,7 +24,7 @@ module Peeky
     class MethodSignatureWithDebugRender
       attr_reader :method_signature
 
-      def initialize(method_signature)
+      def initialize(method_signature, **_opts)
         @method_signature = method_signature
 
         @render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
