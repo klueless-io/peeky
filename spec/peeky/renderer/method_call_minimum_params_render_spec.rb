@@ -42,8 +42,7 @@ RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do
   end
 
   describe '#debug' do
-    subject { instance.debug }
     # let(:method_name) { :complex }
-    it { is_expected } # uncomment to print debug content
+    # it { puts instance.render } # uncomment to print debug content
   end
 end

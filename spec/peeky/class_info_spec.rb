@@ -2,29 +2,37 @@
 
 require 'spec_helper'
 
-class SampleClassClassInfoSpec
-  attr_accessor :a # produces two signatures
-  attr_reader   :b
-  attr_writer   :c
+module Sample
+  module HowDeepIs
+    module TheRabbitHole
+      class ForClassInfoSpec
+        attr_accessor :a # produces two signatures
+        attr_reader   :b
+        attr_writer   :c
 
-  def d; end
+        def d; end
 
-  def simple(first_param); end
+        def simple(first_param); end
 
-  def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+        def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+      end
+    end
+  end
 end
 
 RSpec.describe Peeky::ClassInfo do
   subject { instance }
 
   let(:instance) { described_class.new(target_instance) }
-  let(:target_instance) { SampleClassClassInfoSpec.new }
+  let(:target_instance) { Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec.new }
 
   describe '#constructor' do
     context 'with default parameters' do
       it { is_expected.not_to be_nil }
 
-      it { is_expected.to have_attributes(class_name: 'SampleClassClassInfoSpec') }
+      it { is_expected.to have_attributes(class_name: 'ForClassInfoSpec',
+                                          module_name: 'Sample::HowDeepIs::TheRabbitHole',
+                                          class_full_name: 'Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec') }
     end
   end
 

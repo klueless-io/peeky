@@ -8,6 +8,7 @@ module Peeky
     #   instance.simple('first_param')
     #   instance.complex('aaa', ddd: 'ddd')
     class MethodCallMinimumParamsRender
+      # Method signature stores a MethodInfo object
       attr_reader :method_signature
 
       def initialize(method_signature, **opts)
@@ -16,6 +17,7 @@ module Peeky
         @method_signature = method_signature
       end
 
+      # Render the a method call with minimal parameters
       def render
         name = method_signature.name
 
@@ -28,10 +30,6 @@ module Peeky
         params = minimal_call_parameters.length.zero? ? '' : "(#{minimal_call_parameters})"
 
         "#{@instance_name}.#{name}#{params}"
-      end
-
-      def debug
-        puts render
       end
     end
   end
