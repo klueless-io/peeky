@@ -30,12 +30,14 @@ module Peeky
     #   def z(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);                       end
     # end
     class ClassInterfaceRender
+      # ClassInfo with information about the class instance to be rendered.
       attr_reader :class_info
 
       def initialize(class_info)
         @class_info = class_info
       end
 
+      # Render the class interface
       def render
         @indent = ''
         output = []
@@ -53,30 +55,32 @@ module Peeky
         output.join("\n")
       end
 
+      private
+
       def render_start
-        "#{@indent}class #{class_info.class_name}"
+        "#{@indent}class #{@class_info.class_name}"
       end
 
       def render_accessors
-        result = class_info.accessors.map { |attr| "#{@indent}attr_accessor :#{attr.name}" }
+        result = @class_info.accessors.map { |attr| "#{@indent}attr_accessor :#{attr.name}" }
         result.push '' unless result.length.zero?
         result
       end
 
       def render_readers
-        result = class_info.readers.map { |attr| "#{@indent}attr_reader :#{attr.name}" }
+        result = @class_info.readers.map { |attr| "#{@indent}attr_reader :#{attr.name}" }
         result.push '' unless result.length.zero?
         result
       end
 
       def render_writers
-        result = class_info.writers.map { |attr| "#{@indent}attr_writer :#{attr.name}" }
+        result = @class_info.writers.map { |attr| "#{@indent}attr_writer :#{attr.name}" }
         result.push '' unless result.length.zero?
         result
       end
 
       def render_methods
-        result = class_info.methods.map do |method_signature|
+        result = @class_info.methods.map do |method_signature|
           render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
           "#{@indent}#{render_signature.render}"
         end
@@ -86,10 +90,6 @@ module Peeky
 
       def render_end
         "#{@indent}end"
-      end
-
-      def debug
-        puts render
       end
     end
   end

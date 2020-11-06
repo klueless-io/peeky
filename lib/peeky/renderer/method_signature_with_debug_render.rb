@@ -22,6 +22,7 @@ module Peeky
     #     puts ggg                            # &ggg is block with many calling options, example - instance_eval(&block) if block_given?
     #   end
     class MethodSignatureWithDebugRender
+      # Method signature stores a MethodInfo object
       attr_reader :method_signature
 
       def initialize(method_signature, **_opts)
@@ -29,6 +30,13 @@ module Peeky
 
         @render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
       end
+
+      # Render the method with debug statements for each parameter
+      def render
+        render_method
+      end
+
+      private
 
       def render_method
         name = method_signature.name
@@ -38,7 +46,7 @@ module Peeky
         indent = '  '
         output += "#{indent}puts 'method name: #{name}'\n"
 
-        output += render_logic(indent, 30)
+        output += render_debug_logic(indent, 30)
 
         indent = ''
         output += "#{indent}#{@render_signature.render_end}\n"
@@ -47,7 +55,7 @@ module Peeky
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-      def render_logic(indent, size)
+      def render_debug_logic(indent, size)
         output = ''
         method_signature.parameters.each do |parameter|
           line = ''
@@ -73,14 +81,6 @@ module Peeky
         output
       end
       # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
-
-      def render
-        render_method
-      end
-
-      def debug
-        puts render
-      end
     end
   end
 end

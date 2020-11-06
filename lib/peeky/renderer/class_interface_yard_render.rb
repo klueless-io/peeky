@@ -7,10 +7,22 @@ module Peeky
   module Renderer
     # Render: Class Interface with YARD documentation
     class ClassInterfaceYardRender
+      # Indentation prefix as a string, defaults to +''+
+      #
+      # If you were writing a class into a file with an existing
+      # module, you may set the indent to +'  '+ if you wanted this
+      # render to indent by two spaces
       attr_accessor :indent
+
+      # Default param type when documenting positional and named parameters.
+      # Defaults to  <String>
       attr_accessor :default_param_type
+
+      # Default param type when documenting splat *parameters.
+      # Defaults to  <Object>
       attr_accessor :default_splat_param_type
 
+      # ClassInfo with information about the class instance to be rendered.
       attr_reader :class_info
 
       def initialize(class_info)
@@ -20,6 +32,7 @@ module Peeky
         @default_splat_param_type = 'Object'
       end
 
+      # Render the class interface with YARD documentation
       def render
         output = []
         output.push render_start
@@ -37,16 +50,18 @@ module Peeky
         output.join("\n")
       end
 
+      private
+
       def render_start
         [
-          "#{@indent}# #{class_info.class_name.titleize.humanize}",
-          "#{@indent}class #{class_info.class_name}"
+          "#{@indent}# #{@class_info.class_name.titleize.humanize}",
+          "#{@indent}class #{@class_info.class_name}"
         ]
       end
 
       def render_accessors
         result = []
-        class_info.accessors.map.with_index do |attr, index|
+        @class_info.accessors.map.with_index do |attr, index|
           result.push '' if index.positive?
           result.push "#{@indent}# #{attr.name.to_s.humanize}"
           result.push "#{@indent}attr_accessor :#{attr.name}"
@@ -57,7 +72,7 @@ module Peeky
 
       def render_readers
         result = []
-        class_info.readers.map.with_index do |attr, index|
+        @class_info.readers.map.with_index do |attr, index|
           result.push '' if index.positive?
           result.push "#{@indent}# #{attr.name.to_s.humanize}"
           result.push "#{@indent}attr_reader :#{attr.name}"

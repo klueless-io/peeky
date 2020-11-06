@@ -17,6 +17,10 @@ Layout/EmptyLineBetweenDefs:
   Exclude:
     - "**/spec/**/*"
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "**/spec/**/*"
+
 Style/AccessorGrouping:
   Enabled: false
 

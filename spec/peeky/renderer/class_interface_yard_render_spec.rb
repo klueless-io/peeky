@@ -101,7 +101,6 @@ RSpec.describe Peeky::Renderer::ClassInterfaceYardRender do
   end
 
   describe '#debug' do
-    subject { instance.debug }
-    # it { is_expected } # uncomment to print debug content
+    # it { puts instance.render } # uncomment to print debug content
   end
 end
