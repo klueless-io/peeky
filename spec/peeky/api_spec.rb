@@ -64,7 +64,10 @@ class SampleClassForApi
   def alpha_sort1;                                        end
 end
 
+require 'forwardable'
+
 RSpec.describe Peeky::Api do
+
   describe '#constructor' do
     subject { described_class.new }
     context 'with default parameters' do
@@ -83,11 +86,13 @@ RSpec.describe Peeky::Api do
 
     it { is_expected.not_to be_nil }
 
-    # fit do
-    #   # puts '-' * 70
-    #   puts ruby_files = Dir['**/*.rb'].reject { |f| f.include?('spec') }
-    #   # puts '-' * 70
-    # end
+    it do
+      sample = SampleClassForApi.new
+      class_info_first = Peeky::ClassInfo.new(sample)
+      class_interface_render = Peeky::Renderer::ClassInterfaceRender.new(class_info_first)
+      class_info_second = Peeky::ClassInfo.new(class_interface_render)
+      puts class_info_second.build
+    end
 
     describe '#build_class_info' do
       subject { api.build_class_info(target_instance) }
