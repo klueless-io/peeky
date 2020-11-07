@@ -20,7 +20,7 @@ module Peeky
         # Really need to handle exceptions and types better
         # old_value = instance.send(method_name)
 
-        # This code works by 
+        # This code works by
         # 1. Set @name_of_method variable to random value
         # 2. Call method name and see if it returns that value
         # 3. Return match<true> if the values are equal

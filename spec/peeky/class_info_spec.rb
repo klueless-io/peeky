@@ -30,9 +30,11 @@ RSpec.describe Peeky::ClassInfo do
     context 'with default parameters' do
       it { is_expected.not_to be_nil }
 
-      it { is_expected.to have_attributes(class_name: 'ForClassInfoSpec',
-                                          module_name: 'Sample::HowDeepIs::TheRabbitHole',
-                                          class_full_name: 'Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec') }
+      it do
+        is_expected.to have_attributes(class_name: 'ForClassInfoSpec',
+                                       module_name: 'Sample::HowDeepIs::TheRabbitHole',
+                                       class_full_name: 'Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec')
+      end
     end
   end
 

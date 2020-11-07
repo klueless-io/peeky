@@ -2,17 +2,15 @@
 
 require 'spec_helper'
 
-require 'peeky/tools/generate_yard_documentation'
-
 class SampleForGenerateYardDocumentation
   attr_accessor :sample_read_write
+
   def sample_method
   end
 end
 
 # This is an internal tool that I use to help me document my classes
-RSpec.describe Peeky::Tools::GenerateYardDocumentation do
-
+RSpec.describe 'Peeky::Tools::GenerateYardDocumentation' do
   def files_to_document
     files = Dir['**/*.rb']
     files.reject { |f| f.include?('spec') || f.include?('example') }
@@ -52,7 +50,7 @@ RSpec.describe Peeky::Tools::GenerateYardDocumentation do
     let(:api) { Peeky::Api.new }
 
     describe '#action' do
-      let(:action) { [:xconsole, :temp_file, :compare] } # :console, :temp_file, :compare
+      let(:action) { %i[xconsole temp_file compare] } # :console, :temp_file, :compare
 
       it '#render_class_action action' do
         # Models
@@ -80,11 +78,12 @@ RSpec.describe Peeky::Tools::GenerateYardDocumentation do
 
   def render_class_action(actions, instance, file)
     render_class_to_console(instance, file) if actions.include?(:console)
-    if actions.include?(:temp_file)
-      temp_file = render_class_to_temp_file(instance, file)
-      puts temp_file
-      compare_files(file, temp_file) if actions.include?(:compare)
-    end
+
+    return unless actions.include?(:temp_file)
+
+    temp_file = render_class_to_temp_file(instance, file)
+    puts temp_file
+    compare_files(file, temp_file) if actions.include?(:compare)
   end
 
   def render_class_to_console(instance, file)
@@ -97,7 +96,7 @@ RSpec.describe Peeky::Tools::GenerateYardDocumentation do
 
   def render_class_to_temp_file(instance, existing_file)
     output = Peeky.api.render_class(:class_interface_yard, instance: instance)
-    file_name = existing_file.to_s.gsub("/","-")
+    file_name = existing_file.to_s.gsub('/', '-')
     file_ext = File.extname(existing_file.to_s)
     file = Tempfile.new([file_name, file_ext])
     file.write(output)
@@ -121,5 +120,4 @@ RSpec.describe Peeky::Tools::GenerateYardDocumentation do
     system("code #{file} -r")
     sleep 3
   end
-
 end
