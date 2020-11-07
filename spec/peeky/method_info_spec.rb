@@ -9,6 +9,10 @@ class SampleClassMethodInfo
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
 
+  def test(aaa = 1)
+    puts aaa
+  end
+
   def to_s; end
 end
 
@@ -115,6 +119,11 @@ RSpec.describe Peeky::MethodInfo do
         let(:method_name) { :read_write= }
         it { is_expected.to eq :attr_writer }
       end
+    end
+
+    # Stage 3
+    describe '#infer_default_paramaters' do
+      let(:method_name) { :simple }
     end
   end
 end

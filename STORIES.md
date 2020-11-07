@@ -4,7 +4,7 @@
 
 As a Ruby Developer, I should be able to Reverse engineer classes and methods, so that I can document and understand them
 
-## Development rader
+## Development radar
 
 
 ### Tasks next on list

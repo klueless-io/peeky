@@ -20,11 +20,8 @@ module Peeky
     # type of the parameter
     attr_accessor :type
 
-    # ruby code format when used in a signature
-    attr_accessor :signature_format
-
-    # minimal required usage in a call to the method with this paramater
-    attr_accessor :minimal_call_format
+    # default value for positional or keyed parameters
+    attr_accessor :default_value
 
     def initialize(param)
       map(param)
@@ -58,47 +55,125 @@ module Peeky
       puts "minimal_call_format           : #{minimal_call_format}"
     end
 
+    # ruby code formatted for use in a method signature
+    def signature_format
+      @_signature_format ||= begin
+        method_name = "signature_format_#{@type}".to_sym
+
+        m = method(method_name)
+        m.call
+      end
+    end
+
+    # minimal required usage in a call to the method with this paramater
+    def minimal_call_format
+      @_minimal_call_format ||= begin
+        method_name = "minimal_call_format_#{@type}".to_sym
+
+        if respond_to?(method_name, true)
+          m = method(method_name)
+          m.call
+        else
+          minimal_call_format_ignore
+        end
+      end
+    end
+
     private
 
     # Convert the limited information provided by ruby method.parameters
     # to a richer structure.
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     def map(param)
       @name = param.length > 1 ? param[1].to_s : ''
+
+      @default_value = nil
 
       case param[0]
       when :req
         @type = :param_required
-        @signature_format = name.to_s
-        @minimal_call_format = "'#{name}'"
       when :opt
         @type = :param_optional
-        @signature_format = "#{name} = nil"
-        @minimal_call_format = ''
       when :rest
         @type = :splat
-        @signature_format = "*#{name}"
-        @minimal_call_format = ''
       when :keyreq
         @type = :key_required
-        @signature_format = "#{name}:"
-        @minimal_call_format = "#{name}: '#{name}'"
       when :key
         @type = :key_optional
-        @signature_format = "#{name}: nil"
-        @minimal_call_format = ''
       when :keyrest
         @type = :double_splat
-        @signature_format = "**#{name}"
-        @minimal_call_format = ''
       when :block
         @type = :block
-        @signature_format = "&#{name}"
-        @minimal_call_format = ''
       else
         raise 'unknown type'
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+
+    # Signature format *: Is used to format a parameter when it is used
+    # inside of a method signature, eg. def my_method(p1, p2 = 'xyz', p3: :name_value)
+
+    def signature_format_param_required
+      name.to_s
+    end
+
+    def signature_format_param_optional
+      "#{name} = nil" # signature format needs to be moved to a method
+    end
+
+    def signature_format_splat
+      "*#{name}"
+    end
+
+    def signature_format_key_required
+      "#{name}:"
+    end
+
+    def signature_format_key_optional
+      "#{name}: nil"
+    end
+
+    def signature_format_double_splat
+      "**#{name}"
+    end
+
+    def signature_format_block
+      "&#{name}"
+    end
+
+    # Minimal call format *: Is used to format a call to a method with the least
+    # number of parameters needed to make it work.
+
+    def minimal_call_format_ignore
+      ''
+    end
+
+    def minimal_call_format_param_required
+      "'#{@name}'"
+    end
+
+    # def minimal_call_format_param_optional
+    #   ''
+    # end
+
+    # def minimal_call_format_splat
+    #   ''
+    # end
+
+    def minimal_call_format_key_required
+      "#{@name}: '#{@name}'"
+    end
+
+    # def minimal_call_format_key_optional
+    #   ''
+    # end
+
+    # def minimal_call_format_double_splat
+    #   ''
+    # end
+
+    # def minimal_call_format_block
+    #   ''
+    # end
   end
 end

@@ -31,6 +31,8 @@ gem install peeky
 As a Ruby Developer, I should be able to Reverse engineer classes and methods, so that I can document and understand them
 
 See all [stories](./file.STORIES.html)
+- [stories](./STORIES.MD)
+- [stories](./_file.STORIES.MD)
 
 ### Featured Stories
 
@@ -50,7 +52,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/peeky. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/klueless-io/peeky. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
