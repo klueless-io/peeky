@@ -3,13 +3,14 @@
 require_relative 'lib/peeky/version'
 
 Gem::Specification.new do |spec|
+  # https://piotrmurach.com/articles/writing-a-ruby-gem-specification/
   spec.required_ruby_version  = '>= 2.5'
   spec.name                   = 'peeky'
   spec.version                = Peeky::VERSION
   spec.authors                = ['David Cruwys']
   spec.email                  = ['david@ideasmen.com.au']
 
-  spec.summary                = 'Extracting meta data from ruby classes'
+  spec.summary                = 'Take a peek into your ruby classes and extract useful meta data'
   spec.description            = <<-TEXT
   Peeky is a Ruby GEM for peaking into ruby classes and extracting meta data.
   You can use this meta data to recreate classes, interfaces, documentation etc.
@@ -32,7 +33,6 @@ Gem::Specification.new do |spec|
   # Click Add Project:
   # git@github.com:klueless-io/peeky
   spec.metadata['documentation_uri'] = 'https://rubydoc.info/github/klueless-io/peeky/master'
-  spec.extra_rdoc_files = ['README-stories.md', 'README-stories.md']
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the RubyGem files that have been added into git.
@@ -45,6 +45,12 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
   # spec.extensions    = ['ext/peeky/extconf.rb']
+  spec.extra_rdoc_files = ['README.md', 'STORIES.md']
+  spec.rdoc_options    += [
+    '--title', 'peeky by appydave.com',
+    '--main', 'README.md',
+    '--files STORIES.MD'
+  ]
 
   spec.add_dependency 'activesupport'
   # spec.add_dependency 'tty-box',         '~> 0.5.0'
