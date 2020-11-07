@@ -30,7 +30,7 @@ gem install peeky
 
 As a Ruby Developer, I should be able to Reverse engineer classes and methods, so that I can document and understand them
 
-See all [stories](./README-stories.md)
+See all [stories](./file.STORIES.html)
 
 ### Featured Stories
 
