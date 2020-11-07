@@ -7,6 +7,9 @@ AllCops:
     - "lib/peeky/example/yard_sample.rb"
 
 # My Preferences - Start
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
 Style/EmptyMethod:    
   Exclude:
     - "**/spec/**/*"
