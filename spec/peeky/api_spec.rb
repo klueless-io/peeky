@@ -67,7 +67,6 @@ end
 require 'forwardable'
 
 RSpec.describe Peeky::Api do
-
   describe '#constructor' do
     subject { described_class.new }
     context 'with default parameters' do

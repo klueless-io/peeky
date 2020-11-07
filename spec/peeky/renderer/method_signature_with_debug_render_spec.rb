@@ -2,13 +2,11 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/ParameterLists
 class SampleClassMethodSignatureWithDebugRender
   def simple(first_param); end
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
 end
-# rubocop:enable Metrics/ParameterLists
 
 RSpec.describe Peeky::Renderer::MethodSignatureWithDebugRender do
   subject { instance }

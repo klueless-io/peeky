@@ -149,7 +149,7 @@ module Peeky
     # this is slower when you are not accessing things, but
     # it is easier to debug, so think about what I really want
     # here
-    def build()
+    def build
       ruby_instance_methods
       ruby_instance_method_names
       signatures
@@ -159,17 +159,10 @@ module Peeky
     #
     # Refact: PATTERN: Come up it an debug inclusion system so that
     # so that debug helpers can be included for development and excluded
-    # for production 
+    # for production
     # @param format [String] format: <value for format> (optional)
     def debug(format: [:signatures])
-      if format.include?(:method_names)
-        puts '-' * 70
-        puts 'Method Names'
-        puts '-' * 70
-        ruby_instance_method_names.each do |method_name|
-          puts method_name
-        end
-      end
+      debug_method_names if format.include?(:method_names)
 
       return unless format.include?(:signatures)
 
@@ -179,6 +172,15 @@ module Peeky
       signatures.each(&:debug)
     end
 
+    def debug_method_names
+      puts '-' * 70
+      puts 'Method Names'
+      puts '-' * 70
+      ruby_instance_method_names.each do |method_name|
+        puts method_name
+      end
+    end
+
     private
 
     def ruby_instance_method_names
@@ -186,11 +188,9 @@ module Peeky
     end
 
     def ruby_instance_methods
-      begin
-        @_ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
-      rescue => exception
-        puts exception
-      end
+      @_ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
+    rescue StandardError => e
+      puts e
     end
   end
 end
