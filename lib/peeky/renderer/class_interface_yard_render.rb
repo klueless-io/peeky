@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# require 'active_support/core_ext'
 require 'active_support/core_ext/string'
 
 module Peeky
@@ -37,10 +36,7 @@ module Peeky
         output = []
         output.push render_start
         @indent += '  '
-        output += render_accessors
-        output += render_readers
-        output += render_writers
-        output += render_methods
+        output += (render_accessors + render_readers + render_writers + render_methods)
         output.pop if output.last == ''
 
         @indent = @indent[0..-3]

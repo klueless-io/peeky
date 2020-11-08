@@ -40,7 +40,7 @@ See all [stories](./STORIES.md)
 
 ## Usage
 
-See all [usages](./USAGE.md)
+See all [usage examples](./USAGE.md)
 
 ### Basic Example
 
@@ -104,6 +104,32 @@ class SimpleClass
 end
 ```
 
+#### Class debug
+Render debug information
+
+```ruby
+puts api.render_class(:class_debug, instance: Sample::SimpleClass.new)
+```
+
+
+
+```text
+----------------------------------------------------------------------
+class name                    : SimpleClass
+module name                   : Sample
+class full name               : Sample::SimpleClass
+
+-- Attributes --------------------------------------------------------
+attr_accessor                 : read_write
+
+-- Public Methods ----------------------------------------------------
+position_and_optional::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  bbb = nil            param_optional
+```
+
 
 
 
@@ -115,7 +141,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/peeky. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/klueless-io/peeky. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -123,7 +149,7 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Peeky project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/peeky/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Peeky project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/klueless-io/peeky/blob/master/CODE_OF_CONDUCT.md).
 
 ## Copyright
 
