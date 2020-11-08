@@ -55,6 +55,8 @@ module Peeky
     # TODO: Refactor to a configurable system
     def class_renderer(key)
       case key
+      when :class_debug
+        Peeky::Renderer::ClassDebugRender
       when :class_interface
         Peeky::Renderer::ClassInterfaceRender
       when :class_interface_yard
