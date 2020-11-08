@@ -49,7 +49,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options    += [
     '--title', 'peeky by appydave.com',
     '--main', 'README.md',
-    '--files STORIES.MD'
+    '--files STORIES.MD USAGE.MD'
   ]
 
   spec.add_dependency 'activesupport'

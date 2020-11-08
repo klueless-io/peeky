@@ -122,7 +122,10 @@ module Peeky
             end
           end
 
-          result.push "#{@indent}# @return [Boolean] true when #{method_signature.name.to_s.humanize.downcase}" if method_signature.name.to_s.end_with?('?')
+          if method_signature.name.to_s.end_with?('?')
+            result.push ''
+            result.push "#{@indent}# @return [Boolean] true when #{method_signature.name.to_s.humanize.downcase}"
+          end
 
           render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
           render_signature.indent = @indent

@@ -37,7 +37,7 @@ As a Developer, I can see the method signature of a method, So that I understand
 
 - Render: Method Signature in compact format
 
-As a Developer, I can render method with minimal parameter calls, So that I know the minimum parameters when calling a method
+As a Developer, I can render a method with minimal parameter calls, So that I know the minimum parameters when calling a method
 
 - Render: Simple instance method calls with minimum parameters
 

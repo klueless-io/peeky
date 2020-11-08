@@ -99,6 +99,7 @@ module Peeky
       end
 
       # P available?
+
       # @return [Boolean] true when p available?
       def p_available?
       end
