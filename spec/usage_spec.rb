@@ -55,7 +55,6 @@ module Sample
 end
 
 RSpec.describe 'Usage' do
-
   describe 'Peaky#api' do
     let(:api) { Peeky.api }
 
@@ -83,13 +82,14 @@ RSpec.describe 'Usage' do
       it 'render class_interface_yard with instance of intended class' do
         puts api.render_class(:class_interface_yard, instance: Sample::SimpleClass.new)
       end
-
-      it 'render class_interface_yard with instance of intended class' do
-        puts api.render_class(:class_interface_yard, instance: Sample::SimpleClass.new)
-      end
     end
 
     context '#render_class examples' do
+      it 'render class_debug' do
+        # puts api.render_class(:class_debug, instance: Sample::SimpleClass.new)
+        puts api.render_class(:class_debug, instance: Sample::ComplexClass.new)
+      end
+
       it 'render class_interface' do
         puts api.render_class(:class_interface, instance: Sample::ComplexClass.new)
       end

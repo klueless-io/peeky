@@ -320,3 +320,119 @@ end
 ```
 
 #### Debug class info
+Render debug information on complex class
+
+```ruby
+puts api.render_class(:class_debug, instance: Sample::ComplexClass.new)
+```
+
+
+
+```text
+----------------------------------------------------------------------
+class name                    : ComplexClass
+module name                   : Sample
+class full name               : Sample::ComplexClass
+
+-- Attributes --------------------------------------------------------
+attr_accessor                 : a_read_write1
+attr_accessor                 : a_read_write2
+attr_reader                   : b_another_reader
+attr_reader                   : b_reader
+attr_reader                   : looks_like_an_attr_reader
+attr_writer                   : c_another_writer
+attr_writer                   : c_writer
+
+-- Public Methods ----------------------------------------------------
+alpha_sort1::
+name                 param format         type
+----------------------------------------------------------------------
+
+alpha_sort2::
+name                 param format         type
+----------------------------------------------------------------------
+
+destructive!::
+name                 param format         type
+----------------------------------------------------------------------
+
+do_something_method::
+name                 param format         type
+----------------------------------------------------------------------
+
+method_01::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+
+method_02::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  bbb = nil            param_optional
+
+method_03::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  bbb = nil            param_optional
+ccc                  ccc = nil            param_optional
+
+method_04::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  *aaa                 splat
+
+method_05::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  bbb = nil            param_optional
+ccc                  *ccc                 splat
+
+method_06::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  **aaa                double_splat
+
+method_07::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  *bbb                 splat
+ccc                  **ccc                double_splat
+
+method_08::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  *bbb                 splat
+ccc                  **ccc                double_splat
+ddd                  &ddd                 block
+
+method_09::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa:                 key_required
+
+method_10::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa:                 key_required
+bbb                  bbb: nil             key_optional
+
+method_with_every_type_of_paramater::
+name                 param format         type
+----------------------------------------------------------------------
+aaa                  aaa                  param_required
+bbb                  bbb = nil            param_optional
+ccc                  *ccc                 splat
+ddd                  ddd:                 key_required
+eee                  eee: nil             key_optional
+fff                  **fff                double_splat
+ggg                  &ggg                 block
+
+questionable?::
+name                 param format         type
+----------------------------------------------------------------------
+```
