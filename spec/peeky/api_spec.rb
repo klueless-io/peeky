@@ -29,7 +29,7 @@ RSpec.describe Peeky::Api do
       class_info_first = Peeky::ClassInfo.new(sample)
       class_interface_render = Peeky::Renderer::ClassInterfaceRender.new(class_info_first)
       class_info_second = Peeky::ClassInfo.new(class_interface_render)
-      puts class_info_second.build
+      puts class_info_second.load
     end
 
     describe '#build_class_info' do
