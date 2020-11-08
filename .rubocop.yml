@@ -9,7 +9,9 @@ AllCops:
 # My Preferences - Start
 Naming/MemoizedInstanceVariableName:
   Enabled: false
-
+Naming/VariableNumber:
+  Exclude:
+    - "**/spec/**/*"
 Style/EmptyMethod:    
   Exclude:
     - "**/spec/**/*"
