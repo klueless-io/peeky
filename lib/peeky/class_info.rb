@@ -17,6 +17,23 @@ module Peeky
       @instance = instance
     end
 
+    def to_s
+      class_full_name
+    end
+
+    # Load class_info
+    #
+    # Accessing information about methods and parameters is currently
+    # lazy-loaded via memoization.
+    #
+    # At times during debug or other edge cases, it may be useful to
+    # pre-load this information early.
+    def load
+      ruby_instance_methods
+      ruby_instance_method_names
+      signatures
+    end
+
     # Class full name includes the module namespace
     def class_full_name
       instance.class.name
@@ -142,17 +159,6 @@ module Peeky
       return signatures.select { |im| im.name == name } if filter_type == :all
 
       signatures.select { |im| im.name == name && im.implementation_type == filter_type }
-    end
-
-    # Build (not sure where I am going with this yet)
-    # TODO: Refact: Currently the idea is to pre-load data
-    # this is slower when you are not accessing things, but
-    # it is easier to debug, so think about what I really want
-    # here
-    def build
-      ruby_instance_methods
-      ruby_instance_method_names
-      signatures
     end
 
     # Debug

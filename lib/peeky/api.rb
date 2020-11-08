@@ -16,8 +16,10 @@ module Peeky
     # ClassInfo stores information about the instance of a
     # class that is passed in including methods, attr_accessors
     # attr_readers and attr_writers.
-    def build_class_info(instance)
-      Peeky::ClassInfo.new(instance)
+    def build_class_info(instance, lazy: true)
+      ci = Peeky::ClassInfo.new(instance)
+      ci.load unless lazy
+      ci
     end
 
     # Render a class using a predefined class renderer
