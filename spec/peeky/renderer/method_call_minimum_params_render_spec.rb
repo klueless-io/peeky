@@ -12,7 +12,7 @@ RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do
   subject { instance }
 
   let(:instance) { described_class.new(method_signature) }
-  let(:method_signature) { Peeky::MethodInfo.new(method) }
+  let(:method_signature) { Peeky::MethodInfo.new(method, target_instance) }
   let(:method) { target_instance.method(method_name) }
   let(:target_instance) { SampleClassMinimalCallSignatureRender.new }
   let(:method_name) { :simple }
@@ -26,17 +26,17 @@ RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do
   describe '#render' do
     subject { instance.render }
 
-    it { is_expected.to eq("instance.simple('first_param')") }
+    it { is_expected.to eq("simple('first_param')") }
 
     context 'with instance name' do
-      let(:instance) { described_class.new(method_signature, instance_name: 'var1') }
+      let(:instance) { described_class.new(method_signature, instance_name: 'instance') }
 
-      it { is_expected.to eq("var1.simple('first_param')") }
+      it { is_expected.to eq("instance.simple('first_param')") }
 
       context 'when complex method' do
         let(:method_name) { :complex }
 
-        it { is_expected.to eq("var1.complex('aaa', ddd: 'ddd')") }
+        it { is_expected.to eq("instance.complex('aaa', ddd: 'ddd')") }
       end
     end
   end
