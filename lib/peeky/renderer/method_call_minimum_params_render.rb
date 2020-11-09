@@ -12,8 +12,8 @@ module Peeky
       attr_reader :method_signature
 
       def initialize(method_signature, **opts)
-        instance_name = opts[:instance_name] || 'instance'
-        @instance_name = instance_name
+        # instance_name = opts[:instance_name] || 'instance'
+        @instance_name = opts[:instance_name]
         @method_signature = method_signature
       end
 
@@ -29,7 +29,11 @@ module Peeky
 
         params = minimal_call_parameters.length.zero? ? '' : "(#{minimal_call_parameters})"
 
-        "#{@instance_name}.#{name}#{params}"
+        if @instance_name.nil?
+          "#{name}#{params}"
+        else
+          "#{@instance_name}.#{name}#{params}"
+        end
       end
     end
   end

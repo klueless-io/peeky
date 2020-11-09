@@ -9,9 +9,7 @@ class SampleClassMethodInfo
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
 
-  def test(aaa = 1)
-    puts aaa
-  end
+  def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\"" ); end
 
   def to_s; end
 end
@@ -19,7 +17,7 @@ end
 RSpec.describe Peeky::MethodInfo do
   subject { instance }
 
-  let(:instance) { described_class.new(sample_method) }
+  let(:instance) { described_class.new(sample_method, target_instance) }
   let(:sample_method) { target_instance.method(method_name) }
   let(:method_name) { :simple }
   let(:target_instance) { SampleClassMethodInfo.new }
@@ -69,6 +67,23 @@ RSpec.describe Peeky::MethodInfo do
     end
   end
 
+  describe '#get_parameter' do
+    subject { instance.get_parameter(name) }
+    
+    let(:name) { :first_param }
+
+    context 'with simple method' do
+      it { is_expected.not_to be_nil }
+
+      it do
+        is_expected.to have_attributes(name: 'first_param',
+                                       type: :param_required,
+                                       signature_format: 'first_param',
+                                       minimal_call_format: "'first_param'")
+      end
+    end
+  end
+
   describe '.parameters' do
     subject { instance.parameters }
 
@@ -91,12 +106,14 @@ RSpec.describe Peeky::MethodInfo do
       it { is_expected.to have_attributes(length: 7) }
 
       it do
+        # def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
         is_expected.to include(
           have_attributes(name: 'aaa', type: :param_required, signature_format: 'aaa'       , minimal_call_format: "'aaa'"),
-          have_attributes(name: 'bbb', type: :param_optional, signature_format: 'bbb = nil' , minimal_call_format: ''),
+          have_attributes(name: 'bbb', type: :param_optional, signature_format: 'bbb = 1'   , minimal_call_format: ''),
           have_attributes(name: 'ccc', type: :splat         , signature_format: '*ccc'      , minimal_call_format: ''),
           have_attributes(name: 'ddd', type: :key_required  , signature_format: 'ddd:'      , minimal_call_format: "ddd: 'ddd'"),
-          have_attributes(name: 'eee', type: :key_optional  , signature_format: 'eee: nil'  , minimal_call_format: ''),
+          have_attributes(name: 'eee', type: :key_optional  , signature_format: 'eee: 1'    , minimal_call_format: ''),
           have_attributes(name: 'fff', type: :double_splat  , signature_format: '**fff'     , minimal_call_format: ''),
           have_attributes(name: 'ggg', type: :block         , signature_format: '&ggg'      , minimal_call_format: '')
         )
@@ -105,7 +122,7 @@ RSpec.describe Peeky::MethodInfo do
 
     # Stage 2
     describe '#infer_implementation_type' do
-      subject { instance.infer_implementation_type(target_instance) }
+      subject { instance.infer_implementation_type }
 
       context 'when simple method' do
         let(:method_name) { :simple }
@@ -123,7 +140,19 @@ RSpec.describe Peeky::MethodInfo do
 
     # Stage 3
     describe '#infer_default_paramaters' do
-      let(:method_name) { :simple }
+      subject  { instance.infer_default_paramaters }
+
+      # let(:method_name) { :test }
+      # # let(:method_name) { :complex }
+
+      # it do
+      #   puts instance.parameters.map { |p| p.inspect }
+      #   # def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\"" ); end
+
+      #   instance.infer_default_paramaters(target_instance)
+      #   puts '-' * 70
+      #   puts instance.parameters.map { |p| p.inspect }
+      # end
     end
   end
 end

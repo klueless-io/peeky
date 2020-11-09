@@ -40,7 +40,7 @@ module Peeky
 
       private
 
-      def lj(value, size = 20)
+      def lj(value, size = 24)
         value.to_s.ljust(size)
       end
 
@@ -50,7 +50,7 @@ module Peeky
 
       def class_details
         [
-          '-' * 70,
+          '-' * 100,
           kv('class name', @class_info.class_name),
           kv('module name', @class_info.module_name),
           kv('class full name', @class_info.class_full_name),
@@ -82,12 +82,12 @@ module Peeky
 
       def render_paramaters(parameters)
         result = [
-          "#{lj('name')} #{lj('param format')} #{lj('type')}",
-          '-' * 70
+          "#{lj('name')} #{lj('param format')} #{lj('type')} #{lj('default')}",
+          '-' * 100
         ]
 
         result + parameters.map do |param|
-          "#{lj(param.name)} #{lj(param.signature_format)} #{lj(param.type)}"
+          "#{lj(param.name)} #{lj(param.signature_format)} #{lj(param.type)} #{lj(param.default_value)}"
         end
       end
     end

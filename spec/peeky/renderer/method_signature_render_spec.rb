@@ -12,7 +12,7 @@ RSpec.describe Peeky::Renderer::MethodSignatureRender do
   subject { instance }
 
   let(:instance) { described_class.new(method_signature) }
-  let(:method_signature) { Peeky::MethodInfo.new(method) }
+  let(:method_signature) { Peeky::MethodInfo.new(method, target_instance) }
   let(:method) { target_instance.method(method_name) }
   let(:target_instance) { SampleClassMethodSignatureRender.new }
   let(:method_name) { :simple }
@@ -31,7 +31,7 @@ RSpec.describe Peeky::Renderer::MethodSignatureRender do
     context 'when complex method' do
       let(:method_name) { :complex }
 
-      it { is_expected.to start_with('def complex(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);') }
+      it { is_expected.to start_with('def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg);') }
     end
   end
 

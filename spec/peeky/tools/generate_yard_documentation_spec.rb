@@ -105,8 +105,6 @@ RSpec.describe 'Peeky::Tools::GenerateYardDocumentation' do
   end
 
   def compare_files(file, temp_file)
-    # file = File.join('/Users/davidcruwys/dev/kgems/peeky', file)
-
     puts "XF: #{file}"
     puts "XE: #{File.exist?(file)}"
     puts "YF: #{temp_file}"

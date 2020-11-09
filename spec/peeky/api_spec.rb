@@ -16,7 +16,7 @@ RSpec.describe Peeky::Api do
   describe 'Peaky#api' do
     let(:api) { Peeky.api }
 
-    # let(:method_signature) { Peeky::MethodInfo.new(method) }
+    # let(:method_signature) { Peeky::MethodInfo.new(method, target_instance) }
     # let(:method) { target_instance.method(method_name) }
     # let(:method_name) { :simple }
 
