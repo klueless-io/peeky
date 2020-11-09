@@ -47,7 +47,7 @@ RSpec.describe Peeky::Predicates::AttrReaderPredicate do
 
   describe '#match' do
     let(:instance) { described_class.new.match(target_instance, method_signature) }
-    let(:method_signature) { Peeky::MethodInfo.new(method) }
+    let(:method_signature) { Peeky::MethodInfo.new(method, target_instance) }
     let(:method) { target_instance.method(method_name) }
     let(:target_instance) { SampleClassAttrReaderPredicate.new }
     let(:method_name) { :memoized_reader }

@@ -48,7 +48,7 @@ module Peeky
       #
       # @param first_name [String] first name (required)
       # @param last_name [String] last name (optional)
-      def f_method_with_required_param_and_optional_param(first_name, last_name = nil)
+      def f_method_with_required_param_and_optional_param(first_name, last_name = '')
       end
 
       # G method with required param and two optional params
@@ -56,7 +56,7 @@ module Peeky
       # @param first_name [String] first name (required)
       # @param last_name [String] last name (optional)
       # @param age [String] age (optional)
-      def g_method_with_required_param_and_two_optional_params(first_name, last_name = nil, age = nil)
+      def g_method_with_required_param_and_two_optional_params(first_name, last_name = '', age = 21)
       end
 
       # H list of optional parameters
@@ -95,7 +95,7 @@ module Peeky
       #
       # @param last_name [String] last_name: <value for last name> (required)
       # @param salutation [String] salutation: <value for salutation> (optional)
-      def n_method_with_key_value_param_required_and_optional_key_value(last_name:, salutation: nil)
+      def n_method_with_key_value_param_required_and_optional_key_value(last_name:, salutation: 'Mr')
       end
 
       # P available?
@@ -117,7 +117,7 @@ module Peeky
       # @param eee [String] eee: <value for eee> (optional)
       # @param fff [<key: value>...] **fff - list of key/values
       # @param ggg [Block] &ggg
-      def z_complex(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg)
+      def z_complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg)
       end
     end
   end

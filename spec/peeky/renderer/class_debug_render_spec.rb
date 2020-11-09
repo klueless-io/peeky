@@ -12,6 +12,8 @@ module Sample
     def simple(first_param); end
 
     def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
+    def test(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff: 123, ggg: 'xyz', hhh: true, iii: false); end
   end
 end
 

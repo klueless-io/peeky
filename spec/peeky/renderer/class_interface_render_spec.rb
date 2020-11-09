@@ -23,6 +23,7 @@ class SampleClassClassInterfaceRender
   def l(aaa, *bbb, **ccc, &ddd);                          end
   def m(aaa:);                                            end
   def n(aaa:, bbb: 1);                                    end
+  def o(aaa = 'string1', bbb: 'string2');                 end
   def p?;                                                 end
   def q!;                                                 end
   def z(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg);   end
@@ -54,8 +55,9 @@ RSpec.describe Peeky::Renderer::ClassInterfaceRender do
         .and(include 'attr_accessor :a')
         .and(include 'attr_reader :b')
         .and(include 'attr_writer :c')
+        .and(include "def o(aaa = 'string1', bbb: 'string2');")
         .and(include 'def e(aaa);')
-        .and(include 'def z(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);')
+        .and(include 'def z(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg);')
     end
   end
 

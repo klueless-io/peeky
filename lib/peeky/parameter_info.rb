@@ -79,6 +79,10 @@ module Peeky
       end
     end
 
+    def optional?
+      @_optional |= (@type == :param_optional || @type == :key_optional)
+    end
+
     private
 
     # Convert the limited information provided by ruby method.parameters
@@ -118,7 +122,7 @@ module Peeky
     end
 
     def signature_format_param_optional
-      "#{name} = nil" # signature format needs to be moved to a method
+      "#{name} = #{wrap_default_value('nil')}" # signature format needs to be moved to a method
     end
 
     def signature_format_splat
@@ -130,7 +134,7 @@ module Peeky
     end
 
     def signature_format_key_optional
-      "#{name}: nil"
+      "#{name}: #{wrap_default_value('')}"
     end
 
     def signature_format_double_splat
@@ -152,28 +156,16 @@ module Peeky
       "'#{@name}'"
     end
 
-    # def minimal_call_format_param_optional
-    #   ''
-    # end
-
-    # def minimal_call_format_splat
-    #   ''
-    # end
-
     def minimal_call_format_key_required
       "#{@name}: '#{@name}'"
     end
 
-    # def minimal_call_format_key_optional
-    #   ''
-    # end
-
-    # def minimal_call_format_double_splat
-    #   ''
-    # end
-
-    # def minimal_call_format_block
-    #   ''
-    # end
+    def wrap_default_value(value_for_nil)
+      if default_value.is_a?(String)
+        "'#{default_value}'"
+      else
+        default_value.nil? ? value_for_nil : default_value
+      end
+    end
   end
 end
