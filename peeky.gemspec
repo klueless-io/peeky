@@ -12,18 +12,18 @@ Gem::Specification.new do |spec|
   spec.description            = 'peeky'
   spec.homepage               = 'http://appydave.com/gems/peeky'
   spec.license                = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   spec.metadata['allowed_push_host'] = "Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/klueless-io/peeky'
   spec.metadata['changelog_uri'] = 'https://github.com/klueless-io/peeky/commits/master'
-  
+
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the RubyGem files that have been added into git.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject do |f| f.match(%r{^(test|spec|features)/}) end
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
