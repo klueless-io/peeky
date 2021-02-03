@@ -18,7 +18,25 @@ module Peeky
     end
 
     def to_s
-      class_full_name
+      result = []
+      result.push kv('class', class_full_name)
+      if defined?(@_ruby_instance_method_names)
+        result.push kv('# of instance methods', @_ruby_instance_method_names.join(', '))
+      else
+        result.push kv('# of instance methods', '')
+      end
+      if defined?(@_signatures)
+        result.push kv('# of accessors', accessors.length)
+        result.push kv('# of readers', readers.length)
+        result.push kv('# of writers', writers.length)
+        result.push kv('# of methods', methods.length)
+      else
+        result.push kv('# of accessors', '')
+        result.push kv('# of readers', '')
+        result.push kv('# of writers', '')
+        result.push kv('# of methods', '')
+      end
+      result.join("\n")
     end
 
     # Load class_info
@@ -161,33 +179,11 @@ module Peeky
       signatures.select { |im| im.name == name && im.implementation_type == filter_type }
     end
 
-    # Debug
-    #
-    # Refact: PATTERN: Come up it an debug inclusion system so that
-    # so that debug helpers can be included for development and excluded
-    # for production
-    # @param format [String] format: <value for format> (optional)
-    def debug(format: [:signatures])
-      debug_method_names if format.include?(:method_names)
-
-      return unless format.include?(:signatures)
-
-      puts '-' * 70
-      puts 'Methods'
-      puts '-' * 70
-      signatures.each(&:debug)
-    end
-
-    def debug_method_names
-      puts '-' * 70
-      puts 'Method Names'
-      puts '-' * 70
-      ruby_instance_method_names.each do |method_name|
-        puts method_name
-      end
-    end
-
     private
+
+    def kv(key, value)
+      "#{key.to_s.ljust(25)}: #{value}"
+    end
 
     def ruby_instance_method_names
       @_ruby_instance_method_names ||= instance.class.instance_methods(false).sort

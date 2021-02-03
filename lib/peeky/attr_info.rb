@@ -6,7 +6,9 @@ module Peeky
   # Attr Info is a container that holds read, write or read/write
   # attributes in the form of MethodInfo objects
   class AttrInfo
+    # reader stores a MethodInfo for a matching reader, nil if readable style method_info not found
     attr_reader :reader
+    # writer stores a MethodInfo for a matching writer, nil if writable style method_info not found
     attr_reader :writer
 
     def initialize(reader: nil, writer: nil)
@@ -16,6 +18,7 @@ module Peeky
       @writer = writer
     end
 
+    # Type of the attribute [:attr_writer, :attr_reader or :attr_accessor]
     def type
       @type ||= if @reader.nil?
                   :attr_writer
@@ -24,6 +27,7 @@ module Peeky
                 end
     end
 
+    # Name of the attribute
     def name
       @name ||= @reader.nil? ? @writer.clean_name : @reader.clean_name
     end

@@ -47,15 +47,15 @@ module Peeky
       # F method with required param and optional param
       #
       # @param first_name [String] first name (required)
-      # @param last_name [String] last name (optional)
+      # @param last_name [String] last_name is optional, defaults to ''
       def f_method_with_required_param_and_optional_param(first_name, last_name = '')
       end
 
       # G method with required param and two optional params
       #
       # @param first_name [String] first name (required)
-      # @param last_name [String] last name (optional)
-      # @param age [String] age (optional)
+      # @param last_name [String] last_name is optional, defaults to ''
+      # @param age [Integer] age is optional, defaults to 21
       def g_method_with_required_param_and_two_optional_params(first_name, last_name = '', age = 21)
       end
 
@@ -94,7 +94,7 @@ module Peeky
       # N method with key value param required and optional key value
       #
       # @param last_name [String] last_name: <value for last name> (required)
-      # @param salutation [String] salutation: <value for salutation> (optional)
+      # @param salutation [String] salutation: is optional, defaults to 'Mr'
       def n_method_with_key_value_param_required_and_optional_key_value(last_name:, salutation: 'Mr')
       end
 
@@ -111,13 +111,29 @@ module Peeky
       # Z complex
       #
       # @param aaa [String] aaa (required)
-      # @param bbb [String] bbb (optional)
+      # @param bbb [Integer] bbb is optional, defaults to 1
       # @param ccc [Array<Object>] *ccc - list of ccc
       # @param ddd [String] ddd: <value for ddd> (required)
-      # @param eee [String] eee: <value for eee> (optional)
+      # @param eee [Integer] eee: is optional, defaults to 1
       # @param fff [<key: value>...] **fff - list of key/values
       # @param ggg [Block] &ggg
       def z_complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg)
+      end
+
+      # Z optional styles
+      #
+      # @param aaa [String] aaa (required)
+      # @param bbb [Integer] bbb is optional, defaults to 123
+      # @param ccc [String] ccc is optional, defaults to 'abc'
+      # @param ddd [TrueClass] ddd is optional, defaults to true
+      # @param eee [FalseClass] eee is optional, defaults to false
+      # @param fff [Object] fff is optional, defaults to nil
+      # @param ggg [Integer] ggg: is optional, defaults to 123
+      # @param hhh [String] hhh: is optional, defaults to 'xyz'
+      # @param iii [TrueClass] iii: is optional, defaults to true
+      # @param jjj [FalseClass] jjj: is optional, defaults to false
+      # @param kkk [Object] kkk: is optional, defaults to nil
+      def z_optional_styles(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff = nil, ggg: 123, hhh: 'xyz', iii: true, jjj: false, kkk: )
       end
     end
   end

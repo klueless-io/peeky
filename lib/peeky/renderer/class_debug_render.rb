@@ -19,7 +19,7 @@ module Peeky
         attributes = render_accessors + render_readers + render_writers
 
         if attributes.length.positive?
-          output.push("-- Attributes #{'-' * 56}")
+          output.push("-- Attributes #{'-' * 86}")
           output.push(*attributes)
           output.push('')
         end
@@ -27,7 +27,7 @@ module Peeky
         methods = render_methods
 
         if methods.length.positive?
-          output.push("-- Public Methods #{'-' * 52}")
+          output.push("-- Public Methods #{'-' * 82}")
           output.push(*methods)
           output.push('')
         end

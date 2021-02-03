@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable Style/OptionalBooleanParameter
 class YardSample
   # Check that attr_* is handled
   attr_accessor :a_read_write1, :a_read_write2, :a_read_write3
@@ -45,6 +46,9 @@ class YardSample
   def n_method_with_key_value_param_required_and_optional_key_value(last_name:, salutation: 'Mr')
   end
 
+  def z_optional_styles(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff = nil, ggg: 123, hhh: 'xyz', iii: true, jjj: false, kkk: nil)
+  end
+
   def p_available?
   end
 
@@ -58,6 +62,7 @@ class YardSample
   def alpha_sort2;                                        end
   def alpha_sort1;                                        end
 end
+# rubocop:enable Style/OptionalBooleanParameter
 
 RSpec.describe Peeky::Renderer::ClassInterfaceYardRender do
   subject { instance }
@@ -101,6 +106,6 @@ RSpec.describe Peeky::Renderer::ClassInterfaceYardRender do
   end
 
   describe '#debug' do
-    # it { puts instance.render } # uncomment to print debug content
+    it { puts instance.render } # uncomment to print debug content
   end
 end

@@ -9,7 +9,7 @@ class SampleClassMethodInfo
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
 
-  def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\"" ); end
+  def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\""); end
 
   def to_s; end
 end
@@ -69,7 +69,7 @@ RSpec.describe Peeky::MethodInfo do
 
   describe '#get_parameter' do
     subject { instance.get_parameter(name) }
-    
+
     let(:name) { :first_param }
 
     context 'with simple method' do
@@ -140,19 +140,19 @@ RSpec.describe Peeky::MethodInfo do
 
     # Stage 3
     describe '#infer_default_paramaters' do
-      subject  { instance.infer_default_paramaters }
+      subject { instance.parameters }
 
-      # let(:method_name) { :test }
-      # # let(:method_name) { :complex }
+      let(:method_name) { :test }
+      # let(:method_name) { :complex }
 
-      # it do
-      #   puts instance.parameters.map { |p| p.inspect }
-      #   # def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\"" ); end
-
-      #   instance.infer_default_paramaters(target_instance)
-      #   puts '-' * 70
-      #   puts instance.parameters.map { |p| p.inspect }
-      # end
+      it do
+        is_expected.to include(
+          have_attributes(name: 'aaa', default_value: be_nil),
+          have_attributes(name: 'bbb', default_value: 1),
+          have_attributes(name: 'ccc', default_value: "it's a \"string\""),
+          have_attributes(name: 'ddd', default_value: "it's also a \"string\"")
+        )
+      end
     end
   end
 end
