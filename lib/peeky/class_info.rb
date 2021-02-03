@@ -17,6 +17,7 @@ module Peeky
       @instance = instance
     end
 
+    # rubocop:disable Metrics/AbcSize
     def to_s
       result = []
       result.push kv('class', class_full_name)
@@ -38,6 +39,7 @@ module Peeky
       end
       result.join("\n")
     end
+    # rubocop:enable Metrics/AbcSize
 
     # Load class_info
     #

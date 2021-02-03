@@ -60,7 +60,7 @@ end
 # rubocop:enable Style/OptionalBooleanParameter
 
 # nop = Proc.new do
-#   # 
+#   #
 # end
 
 # RSpec.describe 'Usage2',
@@ -91,7 +91,7 @@ end
 # #   usecase '',
 # #           title: 'Build Class Information',
 # #           summary: 'Use build_class_info to extract meta data from a ruby class' do
-  
+
 # #     ruby 'Build ClassInfo - lazy', summary: 'By default information is lazy loaded only when accessed' do
 # #       class_info = Peeky.api.build_class_info(Sample::SimpleClass.new)
 
@@ -134,6 +134,6 @@ end
 #       puts x.metadata
 #       puts '-' * 150
 #     end
-      
+
 #   # end
 # end
