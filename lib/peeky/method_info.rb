@@ -53,6 +53,7 @@ module Peeky
     end
 
     # Infer implementation type [:method, :attr_reader or :attr_writer]
+    # rubocop:disable Lint/DuplicateBranch
     def infer_implementation_type
       @implementation_type = if @target_instance.nil?
                                :method
@@ -64,6 +65,7 @@ module Peeky
                                :method
                              end
     end
+    # rubocop:enable Lint/DuplicateBranch
 
     # Get parameter by name
     #
@@ -96,14 +98,12 @@ module Peeky
       return unless optional?
 
       tracer.enable do
-        begin
-          @target_instance.instance_eval(minimalist_method)
-        rescue StandardError => e
-          # just print the error for now, we are only attempting to capture the
-          # first call, any errors inside the call cannot be dealt with and should
-          # not be re-raised
-          puts e.message
-        end
+        @target_instance.instance_eval(minimalist_method)
+      rescue StandardError => e
+        # just print the error for now, we are only attempting to capture the
+        # first call, any errors inside the call cannot be dealt with and should
+        # not be re-raised
+        puts e.message
       end
     end
 

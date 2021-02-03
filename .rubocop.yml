@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.5
   DisplayCopNames: true
   ExtraDetails: true
   NewCops: enable
@@ -37,9 +38,9 @@ Layout/SpaceBeforeComma:
   
 Metrics/BlockLength:
   Exclude:
-    - "**/spec/*"
+    - "**/spec/**/*"
     - "*.gemspec"
-  ExcludedMethods:
+  IgnoredMethods:
     - configure
     - context
     - define
