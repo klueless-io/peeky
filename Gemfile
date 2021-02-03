@@ -22,6 +22,6 @@ group :development, :test do
   gem 'rubocop'
 end
 
-group :test do
-  gem 'k_usecases', path: '~/dev/kgems/k_usecases'
-end
+# group :test do
+#   gem 'k_usecases', path: '~/dev/kgems/k_usecases'
+# end

@@ -59,81 +59,81 @@ module Sample
 end
 # rubocop:enable Style/OptionalBooleanParameter
 
-nop = Proc.new do
-  # 
-end
+# nop = Proc.new do
+#   # 
+# end
 
-RSpec.describe 'Usage2',
-               :usecases,
-               :jsonX,
-               :debugX,
-               :markdown,
-               :markdown_prettier,
-               :markdown_openX,
-               markdown_file: 'USAGE2.md',
-               document_title: 'Peeky',
-               document_description: "This document will show you how to use Peeky.\n\nPeeky is a Ruby GEM for peaking into ruby classes and extracting meta" do
+# RSpec.describe 'Usage2',
+#                :usecases,
+#                :jsonX,
+#                :debugX,
+#                :markdown,
+#                :markdown_prettier,
+#                :markdown_openX,
+#                markdown_file: 'USAGE2.md',
+#                document_title: 'Peeky',
+#                document_description: "This document will show you how to use Peeky.\n\nPeeky is a Ruby GEM for peaking into ruby classes and extracting meta" do
 
-#   usecase '',
-#           title: 'Usage',
-#           usage: 'Sample Classes',
-#           usage_description: 'The usage examples listed below will work with these sample classes' do
+# #   usecase '',
+# #           title: 'Usage',
+# #           usage: 'Sample Classes',
+# #           usage_description: 'The usage examples listed below will work with these sample classes' do
 
-#     ruby('Simple example',
-#           source_override: uc_file_content('spec/usage2_spec.rb', lines: [*(6..15), (59)]),
-#           &nop)
+# #     ruby('Simple example',
+# #           source_override: uc_file_content('spec/usage2_spec.rb', lines: [*(6..15), (59)]),
+# #           &nop)
 
-#     ruby('Complex example',
-#       source_override: uc_file_content('spec/usage2_spec.rb', lines: [*(17..59)]),
-#       &nop)
-#   end
+# #     ruby('Complex example',
+# #       source_override: uc_file_content('spec/usage2_spec.rb', lines: [*(17..59)]),
+# #       &nop)
+# #   end
 
-#   usecase '',
-#           title: 'Build Class Information',
-#           summary: 'Use build_class_info to extract meta data from a ruby class' do
+# #   usecase '',
+# #           title: 'Build Class Information',
+# #           summary: 'Use build_class_info to extract meta data from a ruby class' do
   
-#     ruby 'Build ClassInfo - lazy', summary: 'By default information is lazy loaded only when accessed' do
-#       class_info = Peeky.api.build_class_info(Sample::SimpleClass.new)
+# #     ruby 'Build ClassInfo - lazy', summary: 'By default information is lazy loaded only when accessed' do
+# #       class_info = Peeky.api.build_class_info(Sample::SimpleClass.new)
 
-#       puts class_info
+# #       puts class_info
+# #     end
+
+# #     code 'Console output', code_type: :text, summary: '' do
+# # =begin
+# #   class                    : Sample::SimpleClass
+# #   # of instance methods    :
+# #   # of accessors           :
+# #   # of readers             :
+# #   # of writers             :
+# #   # of methods             :
+# # =end
+# #     end
+
+# #     ruby 'Build ClassInfo - pre-loaded', summary: 'Pre-load will ensure that methods and parameters are loaded straight away.' do
+# #       class_info = Peeky.api.build_class_info(Sample::SimpleClass.new, lazy: false)
+
+# #       puts class_info
+# #     end
+
+# #     code 'Console output', code_type: :text, summary: '' do
+# # =begin
+# #     class                    : Sample::SimpleClass
+# #     # of instance methods    : optional_styles, position_and_optional, read_write, read_write=
+# #     # of accessors           : 1
+# #     # of readers             : 0
+# #     # of writers             : 0
+# #     # of methods             : 2
+# # =end
+# #     end
+
+#     code '' do |x|
+#       puts '-' * 150
+#       puts x.class
+#       puts x.inspect
+#       puts x.class.instance_methods(false)
+#       puts x.metadata
+#       puts '-' * 150
 #     end
-
-#     code 'Console output', code_type: :text, summary: '' do
-# =begin
-#   class                    : Sample::SimpleClass
-#   # of instance methods    :
-#   # of accessors           :
-#   # of readers             :
-#   # of writers             :
-#   # of methods             :
-# =end
-#     end
-
-#     ruby 'Build ClassInfo - pre-loaded', summary: 'Pre-load will ensure that methods and parameters are loaded straight away.' do
-#       class_info = Peeky.api.build_class_info(Sample::SimpleClass.new, lazy: false)
-
-#       puts class_info
-#     end
-
-#     code 'Console output', code_type: :text, summary: '' do
-# =begin
-#     class                    : Sample::SimpleClass
-#     # of instance methods    : optional_styles, position_and_optional, read_write, read_write=
-#     # of accessors           : 1
-#     # of readers             : 0
-#     # of writers             : 0
-#     # of methods             : 2
-# =end
-#     end
-
-    code '' do |x|
-      puts '-' * 150
-      puts x.class
-      puts x.inspect
-      puts x.class.instance_methods(false)
-      puts x.metadata
-      puts '-' * 150
-    end
       
-  # end
-end
+#   # end
+# end
