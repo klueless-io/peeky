@@ -108,11 +108,12 @@ module Peeky
             when :key_required
               result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (required)"
             when :key_optional
-              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (optional)"
+              result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name}: is optional, defaults to #{parameter.wrap_default_value('nil')}"
             when :param_required
               result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (required)"
             when :param_optional
-              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (optional)"
+              result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name} is optional, defaults to #{parameter.wrap_default_value('nil')}"
+              # result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (optional)"
             else
               result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase}"
             end

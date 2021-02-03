@@ -48,13 +48,6 @@ module Peeky
       ruby_method.parameters.map { |ruby_paramater| from_parameter(ruby_paramater) }
     end
 
-    def debug
-      puts "name                          : #{name}"
-      puts "type                          : #{type}"
-      puts "signature_format              : #{signature_format}"
-      puts "minimal_call_format           : #{minimal_call_format}"
-    end
-
     # ruby code formatted for use in a method signature
     def signature_format
       @_signature_format ||= begin
@@ -79,8 +72,32 @@ module Peeky
       end
     end
 
+    # Optional?
+
+    # @return [Boolean] true when parameter is one of the optional types?
     def optional?
       @_optional |= (@type == :param_optional || @type == :key_optional)
+    end
+
+    # Default value type will look at the default value and try to
+    # infer the class behind it. Will default to 'Object' fi nil
+    def default_value_type
+      if @default_value.nil?
+        'Object'
+      else
+        @default_value.class
+      end
+    end
+
+    # Wrap default value in quotes if string, or no wrapping otherwise
+    #
+    # @param value_for_nil [String] value for nil, generally '' or 'nil' (required)
+    def wrap_default_value(value_for_nil)
+      if @default_value.is_a?(String)
+        "'#{@default_value}'"
+      else
+        @default_value.nil? ? value_for_nil : @default_value
+      end
     end
 
     private
@@ -158,14 +175,6 @@ module Peeky
 
     def minimal_call_format_key_required
       "#{@name}: '#{@name}'"
-    end
-
-    def wrap_default_value(value_for_nil)
-      if default_value.is_a?(String)
-        "'#{default_value}'"
-      else
-        default_value.nil? ? value_for_nil : default_value
-      end
     end
   end
 end

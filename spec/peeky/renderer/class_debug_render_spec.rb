@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable Style/OptionalBooleanParameter
 module Sample
   class ForClassDebugRender
     # Check that attr_* is handled
@@ -16,6 +17,7 @@ module Sample
     def test(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff: 123, ggg: 'xyz', hhh: true, iii: false); end
   end
 end
+# rubocop:enable Style/OptionalBooleanParameter
 
 RSpec.describe Peeky::Renderer::ClassDebugRender do
   subject { instance }
