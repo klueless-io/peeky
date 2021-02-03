@@ -2,8 +2,10 @@
 
 require 'spec_helper'
 
+# rubocop:disable Lint/EmptyClass
 class SampleClassForApi
 end
+# rubocop:enable Lint/EmptyClass
 
 RSpec.describe Peeky::Api do
   describe '#constructor' do

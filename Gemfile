@@ -12,14 +12,16 @@ group :development do
 end
 
 group :development, :test do
-  gem 'guard-bundler'
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
+  gem 'guard-bundler', '~> 3.0'
+  gem 'guard-rspec', '~> 4.0'
+  gem 'guard-rubocop', '~> 1.2'
   gem 'rake', '~> 12.0'
   # this is used for cmdlets 'self-executing gems'
   gem 'rake-compiler'
   gem 'rspec', '~> 3.0'
-  gem 'rubocop'
+  gem 'rubocop', '~> 1.9'
+  gem 'rubocop-rake', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 # group :test do
