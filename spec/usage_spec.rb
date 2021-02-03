@@ -2,11 +2,15 @@
 
 require 'spec_helper'
 
+# rubocop:disable Style/OptionalBooleanParameter
 module Sample
   class SimpleClass
     attr_accessor :read_write
 
     def position_and_optional(aaa, bbb = 1)
+    end
+
+    def optional_styles(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff: 123, ggg: 'xyz', hhh: true, iii: false)
     end
   end
 
@@ -34,7 +38,7 @@ module Sample
 
     def method_06(**aaa); end
 
-    def method_07(aaa, *bbb, **ccc); end
+    def method_07(aaa, *bbb, ccc: 'string1', **ddd); end
 
     def method_08(aaa, *bbb, **ccc, &ddd); end
 
@@ -53,6 +57,7 @@ module Sample
     def alpha_sort1;                                        end
   end
 end
+# rubocop:enable Style/OptionalBooleanParameter
 
 RSpec.describe 'Usage' do
   describe 'Peaky#api' do

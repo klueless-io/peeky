@@ -62,6 +62,6 @@ RSpec.describe Peeky::Renderer::ClassInterfaceRender do
   end
 
   describe '#debug' do
-    # it { puts instance.render } # uncomment to print debug content
+    it { puts instance.render } # uncomment to print debug content
   end
 end

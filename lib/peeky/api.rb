@@ -16,6 +16,9 @@ module Peeky
     # ClassInfo stores information about the instance of a
     # class that is passed in including methods, attr_accessors
     # attr_readers and attr_writers.
+    #
+    # @param instance [Object] instance of class to gather information about (required)
+    # @param lazy [TrueClass] lazy load method and parameter information, laze: is optional, defaults to true
     def build_class_info(instance, lazy: true)
       ci = Peeky::ClassInfo.new(instance)
       ci.load unless lazy
@@ -23,6 +26,14 @@ module Peeky
     end
 
     # Render a class using a predefined class renderer
+    #
+    # ^1: One of class_info and instance must supplied, they are mutually
+    # exclusive to each other.
+    #
+    # @param render_key [Symbol] class render key (required)
+    # @param class_info [Object] class_info: is optional^1, defaults to nil
+    # @param instance [Object] instance: is optional^1, defaults to nil
+    # @param _opts [<key: value>...] **_opts - list of key/values that can help configure render
     def render_class(render_key, class_info: nil, instance: nil, **_opts)
       raise 'Call render_class with class_info OR instance.' if class_info.nil? && instance.nil?
       raise 'Call render_class with class_info OR instance, these parameters are mutually exclusive' if !class_info.nil? && !instance.nil?
@@ -37,6 +48,7 @@ module Peeky
     # Get a method renderer by :key
     #
     # TODO: Refactor to a configurable system
+    # @param key [String] key is a shortcut to a specific Peeky::Render that handles method_info (required)
     def method_renderer(key)
       case key
       when :signature
@@ -53,6 +65,7 @@ module Peeky
     # Get a class renderer by :key
     #
     # TODO: Refactor to a configurable system
+    # @param key [String] key is a shortcut to a specific Peeky::Renderer that handles class_info (required)
     def class_renderer(key)
       case key
       when :class_debug
