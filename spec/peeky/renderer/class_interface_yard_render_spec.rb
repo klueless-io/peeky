@@ -14,6 +14,10 @@ class YardSample
   def d_do_something_method
   end
 
+  def jin(aaa)
+    # does sometings
+  end
+
   def e_looks_like_an_attr_reader
     @e_looks_like_an_attr_reader ||= 5
   end

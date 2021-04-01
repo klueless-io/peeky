@@ -23,3 +23,5 @@ module Peeky
   class Error < StandardError; end
   # Your code goes here...
 end
+
+puts "Peeky::Version: #{Peeky::VERSION}" if ENV['KLUE_DEBUG']&.to_s&.downcase == 'true'
