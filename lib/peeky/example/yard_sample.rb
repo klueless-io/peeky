@@ -79,6 +79,12 @@ module Peeky
       def j_method_with_list_of_named_arguments(**options)
       end
 
+      # Jin
+      #
+      # @param aaa [String] aaa (required)
+      def jin(aaa)
+      end
+
       # K method with block
       #
       # @param code_block [Block] &code_block
