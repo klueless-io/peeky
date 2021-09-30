@@ -88,51 +88,59 @@ module Peeky
         result
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/BlockLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
       def render_methods
         result = []
-        class_info.methods.map.with_index do |method_signature, index|
-          result.push '' if index.positive?
-          result.push "#{@indent}# #{method_signature.name.to_s.humanize}"
-
-          method_signature.parameters.each_with_index do |parameter, param_index|
-            result.push "#{@indent}#" if param_index.zero?
-
-            case parameter.type
-            when :splat
-              result.push "#{@indent}# @param #{parameter.name} [Array<#{default_splat_param_type}>] *#{parameter.name} - list of #{parameter.name.to_s.humanize.downcase}"
-            when :double_splat
-              result.push "#{@indent}# @param #{parameter.name} [<key: value>...] **#{parameter.name} - list of key/values"
-            when :block
-              result.push "#{@indent}# @param #{parameter.name} [Block] &#{parameter.name}"
-            when :key_required
-              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (required)"
-            when :key_optional
-              result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name}: is optional, defaults to #{parameter.wrap_default_value('nil')}"
-            when :param_required
-              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (required)"
-            when :param_optional
-              result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name} is optional, defaults to #{parameter.wrap_default_value('nil')}"
-              # result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (optional)"
-            else
-              result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase}"
-            end
-          end
-
-          if method_signature.name.to_s.end_with?('?')
-            result.push ''
-            result.push "#{@indent}# @return [Boolean] true when #{method_signature.name.to_s.humanize.downcase}"
-          end
-
-          render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
-          render_signature.indent = @indent
-          render_signature.style = :default
-          result.push render_signature.render
+        class_info.public_methods.map.with_index do |method_signature, index|
+          render_method(result, method_signature, index)
+        end
+        class_info.private_methods.map.with_index do |method_signature, index|
+          result.push "\n#{indent}private\n" if index == 0
+          render_method(result, method_signature, index)
         end
         result.push '' unless result.length.zero?
         result
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/BlockLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+
+      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      def render_method(result, method_signature, index)
+        result.push '' if index.positive?
+        result.push "#{@indent}# #{method_signature.name.to_s.humanize}"
+
+        method_signature.parameters.each_with_index do |parameter, param_index|
+          result.push "#{@indent}#" if param_index.zero?
+
+          case parameter.type
+          when :splat
+            result.push "#{@indent}# @param #{parameter.name} [Array<#{default_splat_param_type}>] *#{parameter.name} - list of #{parameter.name.to_s.humanize.downcase}"
+          when :double_splat
+            result.push "#{@indent}# @param #{parameter.name} [<key: value>...] **#{parameter.name} - list of key/values"
+          when :block
+            result.push "#{@indent}# @param #{parameter.name} [Block] &#{parameter.name}"
+          when :key_required
+            result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name}: <value for #{parameter.name.to_s.humanize.downcase}> (required)"
+          when :key_optional
+            result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name}: is optional, defaults to #{parameter.wrap_default_value('nil')}"
+          when :param_required
+            result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (required)"
+          when :param_optional
+            result.push "#{@indent}# @param #{parameter.name} [#{parameter.default_value_type}] #{parameter.name} is optional, defaults to #{parameter.wrap_default_value('nil')}"
+            # result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase} (optional)"
+          else
+            result.push "#{@indent}# @param #{parameter.name} [#{default_param_type}] #{parameter.name.to_s.humanize.downcase}"
+          end
+        end
+
+        if method_signature.name.to_s.end_with?('?')
+          result.push ''
+          result.push "#{@indent}# @return [Boolean] true when #{method_signature.name.to_s.humanize.downcase}"
+        end
+
+        render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
+        render_signature.indent = @indent
+        render_signature.style = :default
+        result.push render_signature.render
+      end
+      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
       def render_end
         "#{@indent}end"

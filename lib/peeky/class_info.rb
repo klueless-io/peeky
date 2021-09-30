@@ -26,7 +26,7 @@ module Peeky
       else
         result.push kv('# of instance methods', '')
       end
-      if defined?(@_signatures)
+      if defined?(@signatures)
         result.push kv('# of accessors', accessors.length)
         result.push kv('# of readers', readers.length)
         result.push kv('# of writers', writers.length)
@@ -50,7 +50,7 @@ module Peeky
     # pre-load this information early.
     def load
       ruby_instance_methods
-      ruby_instance_method_names
+      # ruby_instance_method_names
       signatures
     end
 
@@ -102,8 +102,20 @@ module Peeky
 
     # Get a list methods
     # @return [Array<MethodInfo>] list of MethodInfo where type is :method
-    def methods
-      @_methods ||= signatures.select { |signature| signature.implementation_type == :method }
+    def all_methods
+      @all_methods ||= signatures.select { |signature| signature.implementation_type == :method }
+    end
+
+    # Get a list of private methods
+    # @return [Array<MethodInfo>] list of MethodInfo where type is :method
+    def private_methods
+      @private_methods ||= signatures.select { |signature| signature.implementation_type == :method && signature.access_control == :private }
+    end
+
+    # Get a list of public methods
+    # @return [Array<MethodInfo>] list of MethodInfo where type is :method
+    def public_methods
+      @public_methods ||= signatures.select { |signature| signature.implementation_type == :method && signature.access_control == :public }
     end
 
     # Get a list methods ordered the way they are in the source code
@@ -161,7 +173,13 @@ module Peeky
     #         such as static, private vs public
     #         deep, deep_to_level, this_instance.
     def signatures
-      @_signatures ||= ruby_instance_methods.map { |im| MethodInfo.new(im, @instance) }
+      return @signatures if defined? @signatures
+
+      @signatures = begin
+        instance_methods = ruby_instance_methods.map { |im| MethodInfo.new(im, @instance) }
+        private_methods  = ruby_private_methods.map  { |im| MethodInfo.new(im, @instance, access_control: :private) }
+        instance_methods + private_methods
+      end
     end
 
     # Signatures by clean name
@@ -191,8 +209,18 @@ module Peeky
       @_ruby_instance_method_names ||= instance.class.instance_methods(false).sort
     end
 
+    def ruby_private_method_names
+      @ruby_private_method_names ||= instance.private_methods(false).sort
+    end
+
+    def ruby_private_methods
+      @ruby_private_methods ||= ruby_private_method_names.map { |method_name| instance.method(method_name) }
+    rescue StandardError => e
+      puts e
+    end
+
     def ruby_instance_methods
-      @_ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
+      @ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
     rescue StandardError => e
       puts e
     end

@@ -15,7 +15,7 @@ class YardSample
   end
 
   def jin(aaa)
-    # does sometings
+    # does something
   end
 
   def e_looks_like_an_attr_reader
@@ -65,6 +65,10 @@ class YardSample
   # Check that methods are sorted
   def alpha_sort2;                                        end
   def alpha_sort1;                                        end
+
+  private
+
+  def keep_me_private; end
 end
 # rubocop:enable Style/OptionalBooleanParameter
 
@@ -94,11 +98,11 @@ RSpec.describe Peeky::Renderer::ClassInterfaceYardRender do
     #     .and(include 'def z(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);')
     # end
 
-    it do
+    fit do
       instance.indent = '    '
       output = instance.render
 
-      File.write('lib/peeky/example/yard_sample.rb', <<~RUBY
+      File.write('spec/sample/yard_sample.rb', <<~RUBY
         module Peeky
           module Example
         #{output}

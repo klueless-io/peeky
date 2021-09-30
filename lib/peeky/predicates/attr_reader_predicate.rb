@@ -32,7 +32,12 @@ module Peeky
         cloned = instance.clone
 
         cloned.instance_eval(code)
-        current_value = cloned.send(method_name)
+        begin
+          current_value = cloned.send(method_name)
+        rescue StandardError #=> exception
+          current_value = nil
+        end
+
         current_value == new_value
       end
 

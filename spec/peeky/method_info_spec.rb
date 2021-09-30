@@ -12,20 +12,24 @@ class SampleClassMethodInfo
   def test(aaa, bbb = 1, ccc = "it's a \"string\"", ddd: "it's also a \"string\""); end
 
   def to_s; end
+
+  private
+
+  def keep_private(first_param); end
 end
 
 RSpec.describe Peeky::MethodInfo do
   subject { instance }
 
-  let(:instance) { described_class.new(sample_method, target_instance) }
+  let(:instance) { described_class.new(sample_method, target_instance, access_control: access_control) }
   let(:sample_method) { target_instance.method(method_name) }
   let(:method_name) { :simple }
+  let(:access_control) { :public }
   let(:target_instance) { SampleClassMethodInfo.new }
 
   describe '#constructor' do
     context 'with default parameters' do
       it { is_expected.not_to be_nil }
-      # it { is_expected.to have_attributes()}
     end
   end
 
@@ -34,6 +38,12 @@ RSpec.describe Peeky::MethodInfo do
       subject { instance.parameters }
 
       it { is_expected.to have_attributes(length: 1) }
+    end
+
+    context '.access_control' do
+      subject { instance.access_control }
+
+      it { is_expected.to eq(:public) }
     end
 
     describe '.name' do
@@ -64,6 +74,17 @@ RSpec.describe Peeky::MethodInfo do
 
         it { is_expected.to start_with '#<Method: Kernel#to_s' }
       end
+    end
+  end
+
+  context '.describe' do
+    context 'when private method' do
+      let(:method_name) { :keep_private }
+      let(:access_control) { :private }
+
+      subject { instance.access_control }
+
+      it { is_expected.to eq(:private) }
     end
   end
 

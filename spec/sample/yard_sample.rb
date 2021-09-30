@@ -141,6 +141,12 @@ module Peeky
       # @param kkk [Object] kkk: is optional, defaults to nil
       def z_optional_styles(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff = nil, ggg: 123, hhh: 'xyz', iii: true, jjj: false, kkk: )
       end
+
+      private
+
+      # Keep me private
+      def keep_me_private
+      end
     end
   end
 end
