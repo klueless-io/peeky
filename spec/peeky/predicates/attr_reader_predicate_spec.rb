@@ -17,6 +17,11 @@ class SampleClassAttrReaderPredicate
 
   def edge_case=; end
 
+  # Code cannot run, generally because of some dependency that peeky hasn't fulfilled
+  def dependency_not_met
+    raise 'blah'
+  end
+
   # Match (unfortunately)
   def memoized_reader
     @memoized_reader ||= 'behaves just like attr_reader, but is not really an attr_reader'
@@ -74,6 +79,11 @@ RSpec.describe Peeky::Predicates::AttrReaderPredicate do
 
     context 'when just_a_method (method with same characteristics as a attr_reader)' do
       let(:method_name) { :just_a_method }
+      it { is_expected.to be_falsy }
+    end
+
+    context 'when some dependency for running the method is not met and an exception is thrown' do
+      let(:method_name) { :dependency_not_met }
       it { is_expected.to be_falsy }
     end
 

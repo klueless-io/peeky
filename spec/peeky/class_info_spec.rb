@@ -15,6 +15,10 @@ module Sample
         def simple(first_param); end
 
         def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
+        private
+
+        def keep_private(first_param); end
       end
     end
   end
@@ -38,8 +42,20 @@ RSpec.describe Peeky::ClassInfo do
     end
   end
 
-  describe '#methods' do
-    subject { instance.methods }
+  describe '#all_methods' do
+    subject { instance.all_methods }
+
+    it { is_expected.to have_attributes(length: 4) }
+  end
+
+  describe '#private_methods' do
+    subject { instance.private_methods }
+
+    it { is_expected.to have_attributes(length: 1) }
+  end
+
+  describe '#public_methods' do
+    subject { instance.public_methods }
 
     it { is_expected.to have_attributes(length: 3) }
   end
@@ -89,7 +105,7 @@ RSpec.describe Peeky::ClassInfo do
   describe '#signatures' do
     subject { instance.signatures }
 
-    it { is_expected.to have_attributes(length: 7) }
+    it { is_expected.to have_attributes(length: 8) }
   end
 
   describe '#attribute_infos' do

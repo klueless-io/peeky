@@ -80,7 +80,7 @@ module Peeky
       end
 
       def render_methods
-        result = @class_info.methods.map do |method_signature|
+        result = @class_info.all_methods.map do |method_signature|
           render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
           "#{@indent}#{render_signature.render}"
         end

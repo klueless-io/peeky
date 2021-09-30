@@ -4,6 +4,10 @@
 
 When using the source code for this gem, start by running `bin/setup` to install locally or `bundle install`
 
+## TODO
+
+@klueless-io - look at [show-source](https://stackoverflow.com/questions/13012109/get-class-location-from-class-object)
+
 ## Installation
 
 Add this line to your application's Gemfile:

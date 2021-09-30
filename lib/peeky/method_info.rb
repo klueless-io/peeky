@@ -14,6 +14,8 @@ module Peeky
     # MethodInfo delegates to the underlying ruby method object
     attr_reader :focal_method
 
+    attr_reader :access_control
+
     def_delegators :focal_method, :name, :receiver, :arity, :super_method
 
     ## Stage 2 is the method likely to be an attribute reader or writer
@@ -23,9 +25,10 @@ module Peeky
     # method in ruby, was it `def method` or `attr_reader` / `attr_writer`
     attr_reader :implementation_type
 
-    def initialize(method, target_instance)
+    def initialize(method, target_instance, access_control: :public)
       @focal_method = method
       @target_instance = target_instance
+      @access_control = access_control
       @parameters = ParameterInfo.from_method(method)
       # stage 1
       # @implementation_type = :method

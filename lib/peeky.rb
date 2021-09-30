@@ -24,4 +24,9 @@ module Peeky
   # Your code goes here...
 end
 
-puts "Peeky::Version: #{Peeky::VERSION}" if ENV['KLUE_DEBUG']&.to_s&.downcase == 'true'
+if ENV['KLUE_DEBUG']&.to_s&.downcase == 'true'
+  namespace = 'Peeky::Version'
+  file_path = $LOADED_FEATURES.find { |f| f.include?('peeky/version') }
+  version   = Peeky::VERSION.ljust(9)
+  puts "#{namespace.ljust(35)} : #{version.ljust(9)} : #{file_path}"
+end

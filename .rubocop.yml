@@ -5,7 +5,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - "_/**/*"
-    - "lib/peeky/example/yard_sample.rb"
+    - "spec/sample/**/*"
 
 # My Preferences - Start
 Metrics/ClassLength:
