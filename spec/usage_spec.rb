@@ -103,7 +103,7 @@ RSpec.describe 'Usage' do
         puts api.render_class(:class_interface, instance: Sample::ComplexClass.new)
       end
 
-      it 'render class_interface_yard' do
+      fit 'render class_interface_yard' do
         puts api.render_class(:class_interface_yard, instance: Sample::ComplexClass.new)
       end
     end
