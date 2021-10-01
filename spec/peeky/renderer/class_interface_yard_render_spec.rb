@@ -66,6 +66,12 @@ class YardSample
   def alpha_sort2;                                        end
   def alpha_sort1;                                        end
 
+  class << self
+    def klass_simple(first_param); end
+  end
+
+  def self.klass_complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
   private
 
   def keep_me_private; end

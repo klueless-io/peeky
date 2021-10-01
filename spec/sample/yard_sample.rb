@@ -142,6 +142,27 @@ module Peeky
       def z_optional_styles(aaa, bbb = 123, ccc = 'abc', ddd = true, eee = false, fff = nil, ggg: 123, hhh: 'xyz', iii: true, jjj: false, kkk: )
       end
 
+      # Class methods
+      class << self
+        # Klass complex
+        #
+        # @param aaa [String] aaa (required)
+        # @param bbb [Object] bbb is optional, defaults to nil
+        # @param ccc [Array<Object>] *ccc - list of ccc
+        # @param ddd [String] ddd: <value for ddd> (required)
+        # @param eee [Object] eee: is optional, defaults to nil
+        # @param fff [<key: value>...] **fff - list of key/values
+        # @param ggg [Block] &ggg
+        def klass_complex(aaa, bbb = nil, *ccc, ddd:, eee: , **fff, &ggg)
+        end
+
+        # Klass simple
+        #
+        # @param first_param [String] first param (required)
+        def klass_simple(first_param)
+        end
+      end
+
       private
 
       # Keep me private
