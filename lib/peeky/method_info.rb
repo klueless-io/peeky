@@ -88,19 +88,16 @@ module Peeky
     # The tests are now down to 5 seconds, but it highlights the cost of use
     # TracePoint.
     def infer_default_paramaters
-      minimalist_method = Peeky::Renderer::MethodCallMinimumParamsRender.new(self).render
+      class_name = @implementation_type == :class_method ? @target_instance.class.name : nil
+      minimalist_method = Peeky::Renderer::MethodCallMinimumParamsRender.new(self, class_name: class_name).render
 
       return if minimalist_method.end_with?('=')
       return unless optional?
 
       tracer.enable do
-        if @implementation_type == :method
-          @target_instance.instance_eval(minimalist_method)
-        end
-        if @implementation_type == :class_method
-          minimalist_method = "#{@target_instance.class.name}.#{minimalist_method}"
-          @target_instance.class.instance_eval(minimalist_method)
-        end
+        # TODO: minimalist method should be able to handle class methods
+        @target_instance.instance_eval(minimalist_method)       if @implementation_type == :method
+        @target_instance.class.instance_eval(minimalist_method) if @implementation_type == :class_method
       rescue StandardError => e
         # just print the error for now, we are only attempting to capture the
         # first call, any errors inside the call cannot be dealt with and should

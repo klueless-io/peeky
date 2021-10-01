@@ -69,7 +69,7 @@ RSpec.describe Peeky::ClassInfo do
   describe '#class_methods' do
     subject { instance.class_methods }
 
-    it { is_expected.to have_attributes(length: 2) }
+    fit { is_expected.to have_attributes(length: 2) }
   end
 
   describe '#method_by_name' do
