@@ -6,6 +6,10 @@ class SampleClassMinimalCallSignatureRender
   def simple(first_param); end
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
+  private
+
+  def keep_me_private; end
 end
 
 RSpec.describe Peeky::Renderer::MethodCallMinimumParamsRender do

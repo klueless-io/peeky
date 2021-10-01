@@ -98,7 +98,7 @@ RSpec.describe Peeky::Renderer::ClassInterfaceYardRender do
     #     .and(include 'def z(aaa, bbb = nil, *ccc, ddd:, eee: nil, **fff, &ggg);')
     # end
 
-    fit do
+    it do
       instance.indent = '    '
       output = instance.render
 

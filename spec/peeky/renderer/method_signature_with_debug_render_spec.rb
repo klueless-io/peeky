@@ -6,6 +6,10 @@ class SampleClassMethodSignatureWithDebugRender
   def simple(first_param); end
 
   def complex(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg); end
+
+  private
+
+  def keep_me_private; end
 end
 
 RSpec.describe Peeky::Renderer::MethodSignatureWithDebugRender do
@@ -31,7 +35,8 @@ RSpec.describe Peeky::Renderer::MethodSignatureWithDebugRender do
   end
 
   describe '#debug' do
+    # let(:method_name) { :keep_me_private }
     # let(:method_name) { :complex }
-    # it { is_expected } # uncomment to print debug content
+    # fit { puts instance.render } # uncomment to print debug content
   end
 end
