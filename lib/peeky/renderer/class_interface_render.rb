@@ -38,15 +38,20 @@ module Peeky
       end
 
       # Render the class interface
+      # rubocop:disable Metrics/AbcSize
       def render
         @indent = ''
-        output = []
+        output  = []
         output.push render_start
         @indent = '  '
         output += render_accessors
         output += render_readers
         output += render_writers
-        output += render_methods
+        output += render_methods(@class_info.public_methods)
+        unless @class_info.private_methods.length.zero?
+          output += ["#{@indent}private", '']
+          output += render_methods(@class_info.private_methods)
+        end
         output.pop if output.last == ''
 
         @indent = ''
@@ -54,6 +59,7 @@ module Peeky
 
         output.join("\n")
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
@@ -79,8 +85,8 @@ module Peeky
         result
       end
 
-      def render_methods
-        result = @class_info.all_methods.map do |method_signature|
+      def render_methods(method_list)
+        result = method_list.map do |method_signature|
           render_signature = Peeky::Renderer::MethodSignatureRender.new(method_signature)
           "#{@indent}#{render_signature.render}"
         end

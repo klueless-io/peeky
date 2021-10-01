@@ -24,10 +24,18 @@ module Peeky
           output.push('')
         end
 
-        methods = render_methods
+        methods = render_methods(@class_info.public_methods)
 
         if methods.length.positive?
           output.push("-- Public Methods #{'-' * 82}")
+          output.push(*methods)
+          output.push('')
+        end
+
+        methods = render_methods(@class_info.private_methods)
+
+        if methods.length.positive?
+          output.push("-- Private Methods #{'-' * 82}")
           output.push(*methods)
           output.push('')
         end
@@ -70,10 +78,10 @@ module Peeky
         @class_info.writers.map { |attr| kv('attr_writer', attr.name) }
       end
 
-      def render_methods
-        @class_info.methods.flat_map do |method|
+      def render_methods(method_list)
+        method_list.flat_map do |method|
           [
-            "#{method.name}::",
+            "[ #{method.name} ]",
             *render_paramaters(method.parameters),
             ''
           ]

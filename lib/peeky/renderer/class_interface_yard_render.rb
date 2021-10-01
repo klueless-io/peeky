@@ -88,18 +88,20 @@ module Peeky
         result
       end
 
+      # rubocop:disable Metics/AbcSize
       def render_methods
         result = []
         class_info.public_methods.map.with_index do |method_signature, index|
           render_method(result, method_signature, index)
         end
         class_info.private_methods.map.with_index do |method_signature, index|
-          result.push "\n#{indent}private\n" if index == 0
+          result.push "\n#{indent}private\n" if index.zero?
           render_method(result, method_signature, index)
         end
         result.push '' unless result.length.zero?
         result
       end
+      # rubocop:enable Metics/AbcSize
 
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       def render_method(result, method_signature, index)

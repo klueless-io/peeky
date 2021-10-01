@@ -30,12 +30,16 @@ module Peeky
         result.push kv('# of accessors', accessors.length)
         result.push kv('# of readers', readers.length)
         result.push kv('# of writers', writers.length)
-        result.push kv('# of methods', methods.length)
+        result.push kv('# of methods', all_methods.length)
+        result.push kv('# of methods - public', public_methods.length)
+        result.push kv('# of methods - private', private_methods.length)
       else
         result.push kv('# of accessors', '')
         result.push kv('# of readers', '')
         result.push kv('# of writers', '')
         result.push kv('# of methods', '')
+        result.push kv('# of methods - public', '')
+        result.push kv('# of methods - private', '')
       end
       result.join("\n")
     end
@@ -61,19 +65,19 @@ module Peeky
 
     # Class name
     def class_name
-      @_class_name ||= class_full_name.to_s.gsub(/^.*::/, '')
+      @class_name ||= class_full_name.to_s.gsub(/^.*::/, '')
       # instance.class.name.split('::').last
     end
 
     # Module name
     def module_name
-      @_module_name ||= class_full_name.to_s.gsub(/(.*)::.*/, '\1')
+      @module_name ||= class_full_name.to_s.gsub(/(.*)::.*/, '\1')
     end
 
     # Get a list of :attr_accessor on the class
     # @return [Array<AttrInfo>] list of AttrInfo where type is :attr_accessor
     def accessors
-      @_accessors ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_accessor }
+      @accessors ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_accessor }
     end
 
     # Get a list of :attr_accessors ordered the way they are in the source code
@@ -86,7 +90,7 @@ module Peeky
 
     # Attribute infos
     def attribute_infos
-      @_attribute_infos ||= begin
+      @attribute_infos ||= begin
         grouped_method_infos = signatures.select { |signature| signature.readable? || signature.writable? }.group_by(&:clean_name)
 
         grouped_method_infos.keys.map { |key| AttrInfo.create(*grouped_method_infos[key]) }
@@ -123,7 +127,7 @@ module Peeky
     def methods_source_order
       # TODO: This feature is required
       # May be best to have a sort object that can be created for each type of ordering that is needed
-      methods
+      all_methods
     end
 
     # Reader by name
@@ -136,7 +140,7 @@ module Peeky
     # Get a list of :attr_reader on the class
     # @return [Array<AttrInfo>] list of AttrInfo where type is :attr_accessor
     def readers
-      @_readers ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_reader }
+      @readers ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_reader }
     end
 
     # Get a list of :attr_reader ordered the way they are in the source code
@@ -150,7 +154,7 @@ module Peeky
     # Get a list of :attr_writer on the class
     # @return [Array<AttrInfo>] list of AttrInfo where type is :attr_writer
     def writers
-      @_writers ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_writer }
+      @writers ||= attribute_infos.select { |attribute_info| attribute_info.type == :attr_writer }
     end
 
     # Get a list of :attr_writer ordered the way they are in the source code
@@ -206,7 +210,7 @@ module Peeky
     end
 
     def ruby_instance_method_names
-      @_ruby_instance_method_names ||= instance.class.instance_methods(false).sort
+      @ruby_instance_method_names ||= instance.class.instance_methods(false).sort
     end
 
     def ruby_private_method_names
