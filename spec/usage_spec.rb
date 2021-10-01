@@ -55,6 +55,10 @@ module Sample
     # Check that methods are sorted
     def alpha_sort2;                                        end
     def alpha_sort1;                                        end
+
+    private
+
+    def keep_me_private; end
   end
 end
 # rubocop:enable Style/OptionalBooleanParameter

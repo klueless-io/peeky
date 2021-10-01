@@ -108,7 +108,7 @@ RSpec.describe Peeky::Api do
         context 'with known render key' do
           let(:key) { :class_interface }
 
-          fit { is_expected.not_to be_nil }
+          it { is_expected.not_to be_nil }
         end
       end
     end

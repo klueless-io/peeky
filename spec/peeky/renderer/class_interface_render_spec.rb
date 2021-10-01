@@ -31,6 +31,10 @@ class SampleClassClassInterfaceRender
   # Check that methods are sorted
   def alpha_sort2;                                        end
   def alpha_sort1;                                        end
+
+  private
+
+  def keep_me_private; end
 end
 
 RSpec.describe Peeky::Renderer::ClassInterfaceRender do
@@ -58,6 +62,7 @@ RSpec.describe Peeky::Renderer::ClassInterfaceRender do
         .and(include "def o(aaa = 'string1', bbb: 'string2');")
         .and(include 'def e(aaa);')
         .and(include 'def z(aaa, bbb = 1, *ccc, ddd:, eee: 1, **fff, &ggg);')
+        .and(include 'def keep_me_private;')
     end
   end
 
