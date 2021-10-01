@@ -143,7 +143,9 @@ RSpec.describe Peeky::MethodInfo do
 
     # Stage 2
     describe '#infer_implementation_type' do
-      subject { instance.infer_implementation_type }
+      subject { instance.implementation_type }
+
+      before { instance.infer_implementation_type }
 
       context 'when simple method' do
         let(:method_name) { :simple }
