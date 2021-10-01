@@ -24,21 +24,9 @@ module Peeky
           output.push('')
         end
 
-        methods = render_methods(@class_info.public_methods)
-
-        if methods.length.positive?
-          output.push("-- Public Methods #{'-' * 82}")
-          output.push(*methods)
-          output.push('')
-        end
-
-        methods = render_methods(@class_info.private_methods)
-
-        if methods.length.positive?
-          output.push("-- Private Methods #{'-' * 82}")
-          output.push(*methods)
-          output.push('')
-        end
+        render_methods_with_heading(output, @class_info.public_methods, 'Public Methods')
+        render_methods_with_heading(output, @class_info.class_methods, 'Class Methods')
+        render_methods_with_heading(output, @class_info.private_methods, 'Private Methods')
 
         output.pop if output.last == ''
 
@@ -76,6 +64,16 @@ module Peeky
 
       def render_writers
         @class_info.writers.map { |attr| kv('attr_writer', attr.name) }
+      end
+
+      def render_methods_with_heading(output, method_list, heading)
+        methods = render_methods(method_list)
+
+        return unless methods.length.positive?
+
+        output.push("-- #{heading} #{'-' * 82}")
+        output.push(*methods)
+        output.push('')
       end
 
       def render_methods(method_list)

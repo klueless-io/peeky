@@ -33,26 +33,33 @@ module Peeky
 
       # Render the class interface with YARD documentation
       def render
-        output = []
-        output.push render_start
+        @output = []
+
+        render_start
         @indent += '  '
-        output += (render_accessors + render_readers + render_writers + render_methods)
-        output.pop if output.last == ''
+
+        render_accessors
+        render_readers
+        render_writers
+
+        render_public_methods
+        render_class_methods
+        render_private_methods
+
+        @output.pop if @output.last == ''
 
         @indent = @indent[0..-3]
 
-        output.push render_end
+        @output.push render_end
 
-        output.join("\n")
+        @output.join("\n")
       end
 
       private
 
       def render_start
-        [
-          "#{@indent}# #{@class_info.class_name.titleize.humanize}",
-          "#{@indent}class #{@class_info.class_name}"
-        ]
+        @output.push "#{@indent}# #{@class_info.class_name.titleize.humanize}"
+        @output.push "#{@indent}class #{@class_info.class_name}"
       end
 
       def render_accessors
@@ -63,7 +70,7 @@ module Peeky
           result.push "#{@indent}attr_accessor :#{attr.name}"
         end
         result.push '' unless result.length.zero?
-        result
+        @output += result
       end
 
       def render_readers
@@ -74,7 +81,7 @@ module Peeky
           result.push "#{@indent}attr_reader :#{attr.name}"
         end
         result.push '' unless result.length.zero?
-        result
+        @output += result
       end
 
       def render_writers
@@ -85,23 +92,40 @@ module Peeky
           result.push "#{@indent}attr_writer :#{attr.name}"
         end
         result.push '' unless result.length.zero?
-        result
+        @output += result
       end
 
-      # rubocop:disable Metics/AbcSize
-      def render_methods
+      def render_public_methods
         result = []
         class_info.public_methods.map.with_index do |method_signature, index|
           render_method(result, method_signature, index)
         end
+        result.push '' unless result.length.zero?
+        @output += result
+      end
+
+      def render_class_methods
+        return if class_info.class_methods.length.zero?
+
+        result = ["#{@indent}# Class methods", "#{@indent}class << self"]
+        @indent += '  '
+        class_info.class_methods.map.with_index do |method_signature, index|
+          render_method(result, method_signature, index)
+        end
+        @indent.delete_suffix!('  ')
+        result.push "#{@indent}end"
+
+        @output += result
+      end
+
+      def render_private_methods
+        result = []
         class_info.private_methods.map.with_index do |method_signature, index|
           result.push "\n#{indent}private\n" if index.zero?
           render_method(result, method_signature, index)
         end
-        result.push '' unless result.length.zero?
-        result
+        @output += result
       end
-      # rubocop:enable Metics/AbcSize
 
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
       def render_method(result, method_signature, index)

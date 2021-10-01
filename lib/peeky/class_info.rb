@@ -33,13 +33,16 @@ module Peeky
         result.push kv('# of methods', all_methods.length)
         result.push kv('# of methods - public', public_methods.length)
         result.push kv('# of methods - private', private_methods.length)
+        result.push kv('# of class methods', class_methods.length)
+
       else
-        result.push kv('# of accessors', '')
-        result.push kv('# of readers', '')
-        result.push kv('# of writers', '')
-        result.push kv('# of methods', '')
-        result.push kv('# of methods - public', '')
-        result.push kv('# of methods - private', '')
+        result.push 'Not Loaded'
+        # result.push kv('# of accessors', '')
+        # result.push kv('# of readers', '')
+        # result.push kv('# of writers', '')
+        # result.push kv('# of methods', '')
+        # result.push kv('# of methods - public', '')
+        # result.push kv('# of methods - private', '')
       end
       result.join("\n")
     end
