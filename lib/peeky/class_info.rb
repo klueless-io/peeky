@@ -53,8 +53,6 @@ module Peeky
     # At times during debug or other edge cases, it may be useful to
     # pre-load this information early.
     def load
-      ruby_instance_methods
-      # ruby_instance_method_names
       signatures
     end
 
@@ -122,6 +120,12 @@ module Peeky
       @public_methods ||= signatures.select { |signature| signature.implementation_type == :method && signature.access_control == :public }
     end
 
+    # Get a list of class methods
+    # @return [Array<MethodInfo>] list of MethodInfo where type is :method
+    def class_methods
+      @class_methods ||= signatures.select { |signature| signature.implementation_type == :class_method }
+    end
+
     # Get a list methods ordered the way they are in the source code
     # @return [Array<MethodInfo>] list of MethodInfo
     def methods_source_order
@@ -180,9 +184,10 @@ module Peeky
       return @signatures if defined? @signatures
 
       @signatures = begin
-        instance_methods = ruby_instance_methods.map { |im| MethodInfo.new(im, @instance) }
-        private_methods  = ruby_private_methods.map  { |im| MethodInfo.new(im, @instance, access_control: :private) }
-        instance_methods + private_methods
+        instance_methods  = ruby_instance_methods.map { |im| MethodInfo.new(im, @instance) }
+        private_methods   = ruby_private_methods.map  { |im| MethodInfo.new(im, @instance, access_control: :private) }
+        class_methods     = ruby_class_methods.map    { |im| MethodInfo.new(im, @instance, implementation_type: :class_method) }
+        instance_methods + private_methods + class_methods
       end
     end
 
@@ -209,6 +214,10 @@ module Peeky
       "#{key.to_s.ljust(25)}: #{value}"
     end
 
+    def ruby_class_method_names
+      @ruby_class_method_names ||= instance.class.singleton_class.instance_methods(false).sort
+    end
+
     def ruby_instance_method_names
       @ruby_instance_method_names ||= instance.class.instance_methods(false).sort
     end
@@ -217,15 +226,24 @@ module Peeky
       @ruby_private_method_names ||= instance.private_methods(false).sort
     end
 
+    def ruby_class_methods
+      @ruby_class_methods ||= ruby_class_method_names.map { |method_name| instance.class.method(method_name) }
+    rescue StandardError => e
+      # puts 'ruby_class_methods'
+      puts e
+    end
+
     def ruby_private_methods
       @ruby_private_methods ||= ruby_private_method_names.map { |method_name| instance.method(method_name) }
     rescue StandardError => e
+      # puts 'ruby_private_methods'
       puts e
     end
 
     def ruby_instance_methods
       @ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
     rescue StandardError => e
+      # puts 'ruby_instance_methods'
       puts e
     end
   end

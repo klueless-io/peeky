@@ -22,21 +22,21 @@ module Peeky
     #
 
     # Implementation type indicates the probable representation of this
-    # method in ruby, was it `def method` or `attr_reader` / `attr_writer`
+    # method in ruby, was it
+    # instance method         `def method`
+    # instance method reader  `attr_reader`
+    # instance method writer  `attr_writer`
+    # class method            `def self.method`
     attr_reader :implementation_type
 
-    def initialize(method, target_instance, access_control: :public)
+    def initialize(method, target_instance, implementation_type: :method, access_control: :public)
       @focal_method = method
       @target_instance = target_instance
       @access_control = access_control
+      @implementation_type = implementation_type
       @parameters = ParameterInfo.from_method(method)
-      # stage 1
-      # @implementation_type = :method
 
-      # stage 2
       infer_implementation_type
-
-      # stage 3
       infer_default_paramaters
     end
 
@@ -55,20 +55,13 @@ module Peeky
       end
     end
 
-    # Infer implementation type [:method, :attr_reader or :attr_writer]
-    # rubocop:disable Lint/DuplicateBranch
+    # Infer implementation type [:class_method, :method, :attr_reader or :attr_writer]
     def infer_implementation_type
-      @implementation_type = if @target_instance.nil?
-                               :method
-                             elsif match(Peeky::Predicates::AttrReaderPredicate)
-                               :attr_reader
-                             elsif match(Peeky::Predicates::AttrWriterPredicate)
-                               :attr_writer
-                             else
-                               :method
-                             end
+      return unless @implementation_type == :method
+
+      @implementation_type = :attr_reader if match(Peeky::Predicates::AttrReaderPredicate)
+      @implementation_type = :attr_writer if match(Peeky::Predicates::AttrWriterPredicate)
     end
-    # rubocop:enable Lint/DuplicateBranch
 
     # Get parameter by name
     #
@@ -101,7 +94,13 @@ module Peeky
       return unless optional?
 
       tracer.enable do
-        @target_instance.instance_eval(minimalist_method)
+        if @implementation_type == :method
+          @target_instance.instance_eval(minimalist_method)
+        end
+        if @implementation_type == :class_method
+          minimalist_method = "#{@target_instance.class.name}.#{minimalist_method}"
+          @target_instance.class.instance_eval(minimalist_method)
+        end
       rescue StandardError => e
         # just print the error for now, we are only attempting to capture the
         # first call, any errors inside the call cannot be dealt with and should
