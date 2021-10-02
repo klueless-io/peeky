@@ -218,7 +218,7 @@ module Peeky
     end
 
     def ruby_class_method_names
-      @ruby_class_method_names ||= instance.class.singleton_class.instance_methods(false).sort
+      @ruby_class_method_names ||= instance.class.methods(false).sort # singleton_class.instance_methods(false).sort
     end
 
     def ruby_instance_method_names
