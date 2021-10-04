@@ -86,7 +86,13 @@ module Peeky
 
     # Module name
     def module_name
-      @module_name ||= class_full_name.to_s.gsub(/(.*)::.*/, '\1')
+      return @module_name if defined? @module_name
+
+      @module_name = if class_full_name.include?('::')
+                       class_full_name.to_s.gsub(/(.*)::.*/, '\1')
+                     else
+                       ''
+                     end
     end
 
     # Get a list of :attr_accessor on the class
