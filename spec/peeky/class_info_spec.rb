@@ -31,6 +31,11 @@ module Sample
   end
 end
 
+class ClassWithNoModule
+  def xxx
+  end
+end
+
 RSpec.describe Peeky::ClassInfo do
   subject { instance }
 
@@ -45,6 +50,16 @@ RSpec.describe Peeky::ClassInfo do
         is_expected.to have_attributes(class_name: 'ForClassInfoSpec',
                                        module_name: 'Sample::HowDeepIs::TheRabbitHole',
                                        class_full_name: 'Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec')
+      end
+
+      context 'when class has no module' do
+        let(:target_instance) { ClassWithNoModule.new }
+
+        it do
+          is_expected.to have_attributes(class_name: 'ClassWithNoModule',
+                                         module_name: '',
+                                         class_full_name: 'ClassWithNoModule')
+        end
       end
     end
   end
