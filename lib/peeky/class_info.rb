@@ -17,6 +17,20 @@ module Peeky
       @instance = instance
     end
 
+    def to_h
+      {
+        class_name: class_name,
+        module_name: module_name,
+        class_full_name: class_full_name,
+        attr_accessor: accessors.map(&:name),
+        attr_reader: readers.map(&:name),
+        attr_writer: writers.map(&:name),
+        klass: methods_to_h(class_methods),
+        instance_public: methods_to_h(public_methods),
+        instance_private: methods_to_h(private_methods)
+      }
+    end
+
     # rubocop:disable Metrics/AbcSize
     def to_s
       result = []
@@ -248,6 +262,21 @@ module Peeky
     rescue StandardError => e
       # puts 'ruby_instance_methods'
       puts e
+    end
+
+    def methods_to_h(methods)
+      methods.map do |m|
+        {
+          name: m.name,
+          paramaters: m.parameters.map do |p|
+            {
+              name: p.name,
+              type: p.type,
+              default_value: p.default_value
+            }
+          end
+        }
+      end
     end
   end
 end
