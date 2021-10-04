@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'json'
 
 module Sample
   module HowDeepIs
@@ -46,6 +47,13 @@ RSpec.describe Peeky::ClassInfo do
                                        class_full_name: 'Sample::HowDeepIs::TheRabbitHole::ForClassInfoSpec')
       end
     end
+  end
+
+  describe '#to_h' do
+    subject { instance.to_h }
+
+    # it { puts JSON.pretty_generate(subject) }
+    it { is_expected.not_to be_empty }
   end
 
   describe '#all_methods' do
