@@ -252,21 +252,21 @@ module Peeky
     def ruby_class_methods
       @ruby_class_methods ||= ruby_class_method_names.map { |method_name| instance.class.method(method_name) }
     rescue StandardError => e
-      # puts 'ruby_class_methods'
+      puts 'ruby_class_methods'
       puts e
     end
 
     def ruby_private_methods
       @ruby_private_methods ||= ruby_private_method_names.map { |method_name| instance.method(method_name) }
     rescue StandardError => e
-      # puts 'ruby_private_methods'
+      puts 'ruby_private_methods'
       puts e
     end
 
     def ruby_instance_methods
       @ruby_instance_methods ||= ruby_instance_method_names.map { |method_name| instance.method(method_name) }
     rescue StandardError => e
-      # puts 'ruby_instance_methods'
+      puts 'ruby_instance_methods'
       puts e
     end
 
