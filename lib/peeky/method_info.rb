@@ -94,15 +94,22 @@ module Peeky
       return if minimalist_method.end_with?('=')
       return unless optional?
 
+      # TODO: maybe I can use this technique instead and just read the source code
+      #       file, line = @focal_method.source_location
+
       tracer.enable do
+        # puts grab_source
         # TODO: minimalist method should be able to handle class methods
         @target_instance.instance_eval(minimalist_method)       if @implementation_type == :method
         @target_instance.class.instance_eval(minimalist_method) if @implementation_type == :class_method
-      rescue StandardError => e
+      rescue StandardError, LoadError # => e
         # just print the error for now, we are only attempting to capture the
         # first call, any errors inside the call cannot be dealt with and should
         # not be re-raised
-        puts e.message
+        # red full stop
+        print "\e[31m.\e[0m"
+        # puts minimalist_method
+        # puts e.message
       end
     end
 
@@ -158,6 +165,11 @@ module Peeky
     # @return [Boolean] true when implementation_type writable?
     def writable?
       @implementation_type == :attr_writer
+    end
+
+    def grab_source(limit = 10)
+      file, line = @focal_method.source_location
+      File.read(file).lines[line - 1, limit] if file && line
     end
   end
 end
