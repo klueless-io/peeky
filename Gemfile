@@ -15,7 +15,7 @@ group :development, :test do
   gem 'guard-bundler', '~> 3.0'
   gem 'guard-rspec', '~> 4.0'
   gem 'guard-rubocop', '~> 1.2'
-  gem 'rake', '~> 12.0'
+  gem 'rake'
   # this is used for cmdlets 'self-executing gems'
   gem 'rake-compiler'
   gem 'rspec', '~> 3.0'
